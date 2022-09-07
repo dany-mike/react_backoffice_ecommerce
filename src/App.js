@@ -1,12 +1,16 @@
+import { render } from "react-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./ui/pages/Home";
+
 function App() {
-  return (
-    <div className="App">
-      <p className="text-2xl">
-        “Tailwind CSS is the only framework that I've seen scale on large teams.
-        It’s easy to customize, adapts to any design, and the build size is
-        tiny.”
-      </p>
-    </div>
+  const rootElement = document.getElementById("root");
+  render(
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>,
+    rootElement
   );
 }
 
