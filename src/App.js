@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <div className="flex h-screen">
         <Sidebar />
-        <div className="content overflow-x-hidden overflow-scroll w-full">
+        <div className="content overflow-x-hidden overflow-scroll w-full p-4 lg:p-12">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/users" element={<Users />} />
