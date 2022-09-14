@@ -15,8 +15,8 @@ export default function Register() {
     setLogin({ ...login, [name]: value });
   };
 
-  const handleLogin = () => {
-    console.log("Handle Login");
+  const handleRegister = () => {
+    console.log("Handle Register");
   };
 
   return (
@@ -45,7 +45,7 @@ export default function Register() {
         type="text"
         name="firstname"
       />
-      <Button handleClick={handleLogin}>Register</Button>{" "}
+      <Button handleClick={handleRegister}>Register</Button>{" "}
     </div>
   );
 }
