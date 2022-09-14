@@ -18,7 +18,7 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="login">
       <Input
         handleChange={handleChange}
         inputLabel="Email"
