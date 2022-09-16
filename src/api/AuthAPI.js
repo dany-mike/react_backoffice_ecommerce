@@ -1,19 +1,29 @@
 import API, { TOKEN_KEY } from "./APIUtils";
-import { setLocalStorage } from "../utils";
+// import { setLocalStorage } from "../utils";
 import { setToken } from "./APIUtils";
 
-function handleUserResponse({ user: { token, ...user } }) {
-  setLocalStorage(TOKEN_KEY, token);
-  setToken(token);
-  return user;
+function handleUserResponse(response) {
+  console.log(response);
+  // setLocalStorage(TOKEN_KEY, token);
+  // setToken(token);
+  // return user;
 }
 
-export function login(email, password) {
-  return API.post("/users/login").then((user) => handleUserResponse(user.data));
+export async function login(email, password) {
+  return API.post("/auth/signin", {
+    email,
+    password,
+  }).then((res) => handleUserResponse(res));
 }
 
-export function register() {
-  return API.post("/users").then((user) => handleUserResponse(user.data));
+export function register(email, password, firstname, lastname) {
+  return API.post("/auth/createAdmin", {
+    email,
+    password,
+    firstname,
+    lastname,
+    role: "admin",
+  }).then((res) => handleUserResponse(res));
 }
 
 export function logout() {

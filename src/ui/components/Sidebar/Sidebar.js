@@ -13,6 +13,14 @@ function Sidebar() {
   // TODO fetch pages from API cms module
   const boPages = [
     {
+      label: "Login",
+      path: "/login",
+    },
+    {
+      label: "Register",
+      path: "/Register",
+    },
+    {
       label: "Home",
       path: "/",
     },
@@ -45,20 +53,6 @@ function Sidebar() {
         />
       </div>
       <Menu iconShape="square">
-        <MenuItem>
-          <Link to="/login">
-            <Button classNameValue="lg:hidden flex justify-center w-full bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              Login
-            </Button>
-          </Link>
-        </MenuItem>
-        <MenuItem>
-          <Link to="/register">
-            <Button classNameValue="lg:hidden flex justify-center bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              Register
-            </Button>
-          </Link>
-        </MenuItem>
         {boPages.map((item, index) => (
           <MenuItem key={index}>
             {item.label}
