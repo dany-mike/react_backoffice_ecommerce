@@ -3,6 +3,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 
 export const TOKEN_KEY = "token";
+export const USER_KEY = "user";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 axios.interceptors.response.use(

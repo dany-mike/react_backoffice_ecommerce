@@ -1,9 +1,10 @@
-import API, { TOKEN_KEY } from "./APIUtils";
+import API, { TOKEN_KEY, USER_KEY } from "./APIUtils";
 import { setLocalStorage } from "../utils";
 import { setToken } from "./APIUtils";
 
 function handleLoginResponse(response) {
   setLocalStorage(TOKEN_KEY, response.data.accessToken);
+  setLocalStorage(USER_KEY, response.data);
   setToken(response.data.accessToken);
   return response.data;
 }
