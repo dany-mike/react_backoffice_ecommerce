@@ -16,6 +16,10 @@ export async function login(email, password) {
   }).then((res) => handleLoginResponse(res));
 }
 
+export function getCurrentUser(userId) {
+  return API.get(`/auth/user/${userId}`);
+}
+
 export function register(email, password, firstname, lastname, role) {
   return API.post("/auth/createAdmin", {
     email,
