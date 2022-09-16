@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
-// import { login } from "../../api/AuthAPI";
+import { login } from "../../api/AuthAPI";
 
 export default function Login() {
   const [loginField, setLoginField] = useState({
@@ -15,8 +15,7 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    console.log("Handle Login");
-    // await login();
+    await login(loginField.email, loginField.password);
   };
 
   return (

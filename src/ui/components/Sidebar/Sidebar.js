@@ -4,7 +4,6 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { isMobile } from "react-device-detect";
-import Button from "../Button/Button";
 
 function Sidebar() {
   const stateValue = isMobile ? true : false;
