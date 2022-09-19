@@ -36,13 +36,12 @@ function App() {
     if (!user && isAuthenticated) {
       fetchUser();
     }
-
     return () => {
       ignore = true;
     };
   }, [dispatch, isAuthenticated, user]);
 
-  const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
+  const ProtectedRoute = ({ redirectPath = "/login", children }) => {
     if (!user) {
       return <Navigate to={redirectPath} replace />;
     }

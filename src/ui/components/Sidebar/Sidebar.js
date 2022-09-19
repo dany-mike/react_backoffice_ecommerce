@@ -4,21 +4,33 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { isMobile } from "react-device-detect";
+import useAuth from "../../../context/auth";
 
 function Sidebar() {
+  const {
+    state: { isAuthenticated },
+  } = useAuth();
+
+  const logout = () => {
+    console.log("logout !");
+  };
+
   const stateValue = isMobile ? true : false;
   const [isCollapsed, setCollapsed] = useState(stateValue);
 
-  // TODO fetch pages from API cms module
-  const boPages = [
+  const authLinks = [
     {
       label: "Login",
       path: "/login",
     },
     {
       label: "Register",
-      path: "/Register",
+      path: "/register",
     },
+  ];
+
+  // TODO fetch pages from API cms module
+  const boLinks = [
     {
       label: "Home",
       path: "/",
@@ -52,7 +64,17 @@ function Sidebar() {
         />
       </div>
       <Menu iconShape="square">
-        {boPages.map((item, index) => (
+        {!isAuthenticated ? (
+          authLinks.map((item, index) => (
+            <MenuItem key={index}>
+              {item.label}
+              <Link to={item.path} />
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem onClick={logout}>Logout</MenuItem>
+        )}
+        {boLinks.map((item, index) => (
           <MenuItem key={index}>
             {item.label}
             <Link to={item.path} />
