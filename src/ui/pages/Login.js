@@ -2,8 +2,11 @@ import { useState } from "react";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
 import { login } from "../../api/AuthAPI";
+import useAuth from "../../context/auth";
 
 export default function Login() {
+  const { dispatch } = useAuth();
+
   const [loginField, setLoginField] = useState({
     email: "",
     password: "",
@@ -16,9 +19,12 @@ export default function Login() {
 
   const handleLogin = async () => {
     await login(loginField.email, loginField.password);
+    dispatch({ type: "LOGIN" });
+    // TODO add redirection with login success alert
   };
 
   return (
+    // TODO: Add front validation
     <div className="login">
       <Input
         handleChange={handleChange}

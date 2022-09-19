@@ -5,14 +5,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 import useAuth from "../../../context/auth";
+import { logout } from "../../../api/AuthAPI";
 
 function Sidebar() {
   const {
     state: { isAuthenticated },
+    dispatch,
   } = useAuth();
 
-  const logout = () => {
-    console.log("logout !");
+  const handleLogout = () => {
+    logout();
+    dispatch({ type: "LOGOUT" });
   };
 
   const stateValue = isMobile ? true : false;
@@ -72,7 +75,7 @@ function Sidebar() {
             </MenuItem>
           ))
         ) : (
-          <MenuItem onClick={logout}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         )}
         {boLinks.map((item, index) => (
           <MenuItem key={index}>

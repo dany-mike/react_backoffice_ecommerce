@@ -3,6 +3,7 @@ import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
 
 export default function Register() {
+  // TODO: add an alert when registration successful
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -20,6 +21,7 @@ export default function Register() {
   };
 
   return (
+    // TODO: Add front validation
     <div>
       <Input
         handleChange={handleChange}
