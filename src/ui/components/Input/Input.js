@@ -1,5 +1,4 @@
 export default function Input({
-  classNameValue,
   inputLabel,
   type,
   name,
@@ -14,7 +13,10 @@ export default function Input({
 }) {
   return (
     <div>
-      <label htmlFor={name} className={classNameValue}>
+      <label
+        htmlFor={name}
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 mt-2"
+      >
         {inputLabel}
       </label>
       <input

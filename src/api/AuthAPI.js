@@ -13,11 +13,13 @@ export async function login(email, password) {
   return API.post("/auth/signin", {
     email,
     password,
-  }).then((res) => handleLoginResponse(res));
+  })
+    .then((res) => handleLoginResponse(res))
+    .catch((err) => err);
 }
 
 export function getCurrentUser(userId) {
-  return API.get(`/auth/user/${userId}`);
+  return API.get(`/auth/user/${userId}`).catch((err) => err);
 }
 
 export function register(email, password, firstname, lastname, role) {
@@ -27,7 +29,9 @@ export function register(email, password, firstname, lastname, role) {
     firstname,
     lastname,
     role,
-  }).then((res) => res);
+  })
+    .then((res) => res)
+    .catch((err) => err);
 }
 
 export function logout() {

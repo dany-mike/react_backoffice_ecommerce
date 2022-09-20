@@ -4,18 +4,34 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Input from "../components/Input/Input";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
+import ErrorMessageRendered from "../components/ErrorMessageRendered/ErrorMessageRendered";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { dispatch } = useAuth();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    await login(data.email, data.password);
-    dispatch({ type: "LOGIN" });
-    // TODO add redirection with login success alert
+    const response = await login(data.email, data.password);
+    if (response?.accessToken) {
+      setIsSuccess(true);
+      dispatch({ type: "LOGIN" });
+      navigate("/", {
+        state: { message: `${data.email} logged in successfuly !` },
+      });
+    }
+
+    if (!isSuccess && response?.data?.error) {
+      setErrorMessage(response?.data?.message);
+    }
   };
 
   return (
@@ -29,16 +45,13 @@ export default function Login() {
           required="Email is required"
           patternValue={/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/}
           patternMessage="Email must be valid"
-          classNameValue="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           register={register}
         />
         <ErrorMessage
           errors={errors}
           name="email"
           render={() => (
-            <p className="font-extralight text-red-500 ml-1 text-sm">
-              {errors.email?.message}
-            </p>
+            <ErrorMessageRendered>{errors.email?.message}</ErrorMessageRendered>
           )}
         />
         <Input
@@ -47,17 +60,21 @@ export default function Login() {
           name="password"
           required="Password is required"
           register={register}
-          classNameValue="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 mt-2"
         />
         <ErrorMessage
           errors={errors}
           name="password"
           render={() => (
-            <p className="font-extralight text-red-500 ml-1 text-sm">
+            <ErrorMessageRendered>
               {errors.password?.message}
-            </p>
+            </ErrorMessageRendered>
           )}
         />
+        {errorMessage ? (
+          <ErrorMessageRendered>{errorMessage}</ErrorMessageRendered>
+        ) : (
+          <></>
+        )}
         <SubmitButton
           value="Login"
           classNameValue="text-white flex justify-center hover:cursor-pointer bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm py-2.5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-full mt-4"
