@@ -10,7 +10,7 @@ function Navbar() {
   const appTitle = "Ecommerce BackOffice";
 
   const {
-    state: { isAuthenticated },
+    state: { isAuthenticated, user },
     dispatch,
   } = useAuth();
 
@@ -39,11 +39,15 @@ function Navbar() {
                 Login
               </Button>
             </Link>
-            <Link to="/register">
-              <Button classNameValue="hidden lg:block bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                Register
-              </Button>
-            </Link>
+            {isAuthenticated && user?.role === "superAdmin" ? (
+              <Link to="/register">
+                <Button classNameValue="hidden lg:block bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  Register
+                </Button>
+              </Link>
+            ) : (
+              <></>
+            )}
           </>
         )}
       </div>

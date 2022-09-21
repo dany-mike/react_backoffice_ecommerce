@@ -9,7 +9,7 @@ function handleLoginResponse(response) {
   return response.data;
 }
 
-export async function login(email, password) {
+export function login(email, password) {
   return API.post("/auth/signin", {
     email,
     password,

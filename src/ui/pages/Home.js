@@ -1,11 +1,14 @@
-import { useLocation } from "react-router-dom";
+import useAuth from "../../context/auth";
 
 export default function Home() {
-  const location = useLocation();
+  const {
+    state: { user },
+  } = useAuth();
+
   return (
     <div>
-      <p>Home!</p>
-      <p>{location?.state}</p>
+      <p className="font-semibold">Connected as {user?.email}</p>
+      <p className="font-semibold">Role: {user?.role}</p>
     </div>
   );
 }

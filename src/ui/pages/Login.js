@@ -1,4 +1,4 @@
-import { login } from "../../api/AuthAPI";
+import { getCurrentUser, login } from "../../api/AuthAPI";
 import useAuth from "../../context/auth";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -7,10 +7,13 @@ import SubmitButton from "../components/SubmitButton/SubmitButton";
 import ErrorMessageRendered from "../components/ErrorMessageRendered/ErrorMessageRendered";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getLocalStorageValue } from "../../utils";
 
 export default function Login() {
-  const { dispatch } = useAuth();
-  const [isSuccess, setIsSuccess] = useState(null);
+  const {
+    dispatch,
+    state: { user },
+  } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -21,16 +24,16 @@ export default function Login() {
   } = useForm();
   const onSubmit = async (data) => {
     const response = await login(data.email, data.password);
-
-    response?.accessToken ? setIsSuccess(true) : setIsSuccess(false);
-
-    if (!isSuccess && response?.data?.error) {
+    if (response?.statusCode === 200) {
+      const payload = await getCurrentUser(getLocalStorageValue("user")?.id);
+      const { token, ...user } = payload.data;
+      dispatch({ type: "LOAD_USER", user });
+      dispatch({ type: "LOGIN" });
+      navigate("/");
+    } else {
       setErrorMessage(response?.data?.message);
       return;
     }
-
-    dispatch({ type: "LOGIN" });
-    navigate("/");
   };
 
   return (

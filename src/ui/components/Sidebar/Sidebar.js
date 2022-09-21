@@ -9,7 +9,7 @@ import { logout } from "../../../api/AuthAPI";
 
 function Sidebar() {
   const {
-    state: { isAuthenticated },
+    state: { isAuthenticated, user },
     dispatch,
   } = useAuth();
 
@@ -20,17 +20,6 @@ function Sidebar() {
 
   const stateValue = isMobile ? true : false;
   const [isCollapsed, setCollapsed] = useState(stateValue);
-
-  const authLinks = [
-    {
-      label: "Login",
-      path: "/login",
-    },
-    {
-      label: "Register",
-      path: "/register",
-    },
-  ];
 
   // TODO fetch pages from API cms module
   const boLinks = [
@@ -67,22 +56,32 @@ function Sidebar() {
         />
       </div>
       <Menu iconShape="square">
-        {!isAuthenticated ? (
-          authLinks.map((item, index) => (
+        {isAuthenticated && user?.role === "superAdmin" ? (
+          <MenuItem onClick={handleLogout}>
+            Register
+            <Link to="/register" />
+          </MenuItem>
+        ) : (
+          <></>
+        )}
+        {isAuthenticated ? (
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        ) : (
+          <></>
+        )}
+        {isAuthenticated ? (
+          boLinks.map((item, index) => (
             <MenuItem key={index}>
               {item.label}
               <Link to={item.path} />
             </MenuItem>
           ))
         ) : (
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        )}
-        {boLinks.map((item, index) => (
-          <MenuItem key={index}>
-            {item.label}
-            <Link to={item.path} />
+          <MenuItem onClick={handleLogout}>
+            Login
+            <Link to="/login" />
           </MenuItem>
-        ))}
+        )}
       </Menu>
     </ProSidebar>
   );
