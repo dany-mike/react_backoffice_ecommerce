@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const { dispatch } = useAuth();
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -21,21 +21,19 @@ export default function Login() {
   } = useForm();
   const onSubmit = async (data) => {
     const response = await login(data.email, data.password);
-    if (response?.accessToken) {
-      setIsSuccess(true);
-      dispatch({ type: "LOGIN" });
-      navigate("/", {
-        state: { message: `${data.email} logged in successfuly !` },
-      });
-    }
+
+    response?.accessToken ? setIsSuccess(true) : setIsSuccess(false);
 
     if (!isSuccess && response?.data?.error) {
       setErrorMessage(response?.data?.message);
+      return;
     }
+
+    dispatch({ type: "LOGIN" });
+    navigate("/");
   };
 
   return (
-    // TODO: Add front validation
     <div className="login">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
