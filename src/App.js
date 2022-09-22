@@ -11,6 +11,7 @@ import useAuth, { AuthProvider } from "./context/auth";
 import { useEffect } from "react";
 import { getCurrentUser } from "./api/AuthAPI";
 import { getLocalStorageValue } from "./utils";
+import LayoutPage from "./ui/components/LayoutPage/LayoutPage";
 
 function App() {
   const {
@@ -60,7 +61,9 @@ function App() {
               path="/"
               element={
                 <ProtectedRoute>
-                  <Home user={user} />
+                  <LayoutPage title="Home">
+                    <Home user={user} />
+                  </LayoutPage>
                 </ProtectedRoute>
               }
             />
@@ -68,7 +71,9 @@ function App() {
               path="/users"
               element={
                 <ProtectedRoute>
-                  <Users user={user} />
+                  <LayoutPage title="Users">
+                    <Users user={user} />
+                  </LayoutPage>
                 </ProtectedRoute>
               }
             />
@@ -76,7 +81,9 @@ function App() {
               path="/products"
               element={
                 <ProtectedRoute>
-                  <Products />
+                  <LayoutPage title="Products">
+                    <Products />
+                  </LayoutPage>
                 </ProtectedRoute>
               }
             />
@@ -84,7 +91,9 @@ function App() {
               path="/register"
               element={
                 <ProtectedRoute>
-                  <Register user={user} />
+                  <LayoutPage title="Register">
+                    <Register user={user} />
+                  </LayoutPage>
                 </ProtectedRoute>
               }
             />
@@ -92,7 +101,9 @@ function App() {
               path="/cms"
               element={
                 <ProtectedRoute>
-                  <TextManager />
+                  <LayoutPage title="Text manager">
+                    <TextManager />
+                  </LayoutPage>
                 </ProtectedRoute>
               }
             />
