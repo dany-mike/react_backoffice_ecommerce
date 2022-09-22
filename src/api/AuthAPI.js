@@ -22,7 +22,7 @@ export function getCurrentUser(userId) {
   return API.get(`/auth/user/${userId}`).catch((err) => err);
 }
 
-export function register(email, password, firstname, lastname, role) {
+export function createAdmin(email, password, firstname, lastname, role) {
   return API.post("/auth/createAdmin", {
     email,
     password,

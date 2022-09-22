@@ -2,13 +2,13 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { createAdmin } from "../../api/AuthAPI";
 import ErrorMessageRendered from "../components/ErrorMessageRendered/ErrorMessageRendered";
 import Input from "../components/Input/Input";
 import Select from "../components/Select/Select";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
 
 export default function Register() {
-  // TODO: redirect to users list when registration is successful
   const {
     register,
     handleSubmit,
@@ -19,20 +19,23 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data) => {
-    console.log(data);
-    // const response = await register(data.email, data.password);
-    // if (response?.statusCode === 200) {
-    //   // const payload = await getCurrentUser(getLocalStorageValue("user")?.id);
-    //   // const { token, ...user } = payload.data;
-    //   navigate("/users");
-    // } else {
-    //   setErrorMessage(response?.data?.message);
-    //   return;
-    // }
+    const user = await createAdmin(
+      data.email,
+      data.password,
+      data.firstname,
+      data.lastname,
+      data.role
+    );
+
+    if (user?.data?.message) {
+      setErrorMessage(user?.data?.message);
+      return;
+    }
+
+    navigate("/users");
   };
 
   return (
-    // TODO: Add front validation
     <div className="register">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
@@ -69,11 +72,6 @@ export default function Register() {
             </ErrorMessageRendered>
           )}
         />
-        {errorMessage ? (
-          <ErrorMessageRendered>{errorMessage}</ErrorMessageRendered>
-        ) : (
-          <></>
-        )}
         <Input
           inputLabel="Firstname"
           type="text"
@@ -112,6 +110,18 @@ export default function Register() {
           options={["admin", "superAdmin"]}
           selectLabel="Role"
         />
+        <ErrorMessage
+          errors={errors}
+          name="role"
+          render={() => (
+            <ErrorMessageRendered>{errors?.role?.message}</ErrorMessageRendered>
+          )}
+        />
+        {errorMessage ? (
+          <ErrorMessageRendered>{errorMessage}</ErrorMessageRendered>
+        ) : (
+          <></>
+        )}
         <SubmitButton
           value="Register"
           classNameValue="text-white flex justify-center hover:cursor-pointer bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm py-2.5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-full mt-4"
