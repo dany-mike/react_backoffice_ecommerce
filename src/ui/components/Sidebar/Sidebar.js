@@ -55,7 +55,7 @@ function Sidebar({ isAuthenticated, user }) {
       <Menu iconShape="square">
         {isAuthenticated && user?.role === "superAdmin" ? (
           <MenuItem>
-            Register
+            Create Admin
             <Link to="/register" />
           </MenuItem>
         ) : (

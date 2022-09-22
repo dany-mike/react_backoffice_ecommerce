@@ -28,7 +28,6 @@ function App() {
         if (!ignore) {
           dispatch({ type: "LOAD_USER", user });
         }
-        console.log("FETCH USER");
       } catch (error) {
         console.log(error);
       }
