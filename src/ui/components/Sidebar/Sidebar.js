@@ -4,13 +4,26 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { isMobile } from "react-device-detect";
+import useAuth from "../../../context/auth";
+import { logout } from "../../../api/AuthAPI";
 
-function Sidebar() {
+function Sidebar({ isAuthenticated, user }) {
+  const { dispatch } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    dispatch({ type: "LOGOUT" });
+  };
+
   const stateValue = isMobile ? true : false;
   const [isCollapsed, setCollapsed] = useState(stateValue);
 
   // TODO fetch pages from API cms module
-  const boPages = [
+  const boLinks = [
+    {
+      label: "Create Admin",
+      path: "/register",
+    },
     {
       label: "Home",
       path: "/",
@@ -44,12 +57,26 @@ function Sidebar() {
         />
       </div>
       <Menu iconShape="square">
-        {boPages.map((item, index) => (
-          <MenuItem key={index}>
-            {item.label}
-            <Link to={item.path} />
+        {isAuthenticated ? (
+          boLinks.map((item, index) => (
+            <MenuItem key={index}>
+              {item.label}
+              <Link to={item.path} />
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem onClick={handleLogout}>
+            Login
+            <Link to="/login" />
           </MenuItem>
-        ))}
+        )}
+        {isAuthenticated ? (
+          <MenuItem onClick={handleLogout} className="lg:hidden font-bold">
+            Logout
+          </MenuItem>
+        ) : (
+          <></>
+        )}
       </Menu>
     </ProSidebar>
   );
