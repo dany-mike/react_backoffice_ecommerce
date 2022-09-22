@@ -11,3 +11,12 @@ export function getLocalStorageValue(key) {
 export function setLocalStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
+
+export function authHeader() {
+  let user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.accessToken) {
+    return { Authorization: "Bearer " + user.accessToken };
+  } else {
+    return {};
+  }
+}
