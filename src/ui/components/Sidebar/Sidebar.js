@@ -7,11 +7,8 @@ import { isMobile } from "react-device-detect";
 import useAuth from "../../../context/auth";
 import { logout } from "../../../api/AuthAPI";
 
-function Sidebar() {
-  const {
-    state: { isAuthenticated, user },
-    dispatch,
-  } = useAuth();
+function Sidebar({ isAuthenticated, user }) {
+  const { dispatch } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -57,15 +54,10 @@ function Sidebar() {
       </div>
       <Menu iconShape="square">
         {isAuthenticated && user?.role === "superAdmin" ? (
-          <MenuItem onClick={handleLogout}>
+          <MenuItem>
             Register
             <Link to="/register" />
           </MenuItem>
-        ) : (
-          <></>
-        )}
-        {isAuthenticated ? (
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         ) : (
           <></>
         )}
@@ -81,6 +73,13 @@ function Sidebar() {
             Login
             <Link to="/login" />
           </MenuItem>
+        )}
+        {isAuthenticated ? (
+          <MenuItem onClick={handleLogout} className="lg:hidden font-bold">
+            Logout
+          </MenuItem>
+        ) : (
+          <></>
         )}
       </Menu>
     </ProSidebar>

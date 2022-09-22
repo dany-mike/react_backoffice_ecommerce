@@ -36,5 +36,6 @@ export function register(email, password, firstname, lastname, role) {
 
 export function logout() {
   localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
   setToken(null);
 }

@@ -1,10 +1,4 @@
-import useAuth from "../../context/auth";
-
-export default function Home() {
-  const {
-    state: { user },
-  } = useAuth();
-
+export default function Home({ user }) {
   return (
     <div>
       <p className="font-semibold">Connected as {user?.email}</p>

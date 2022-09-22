@@ -10,10 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { getLocalStorageValue } from "../../utils";
 
 export default function Login() {
-  const {
-    dispatch,
-    state: { user },
-  } = useAuth();
+  const { dispatch } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 

@@ -28,6 +28,7 @@ function App() {
         if (!ignore) {
           dispatch({ type: "LOAD_USER", user });
         }
+        console.log("FETCH USER");
       } catch (error) {
         console.log(error);
       }
@@ -42,7 +43,7 @@ function App() {
   }, [dispatch, isAuthenticated, user]);
 
   const ProtectedRoute = ({ redirectPath = "/login", children }) => {
-    if (!user) {
+    if (!getLocalStorageValue("token")) {
       return <Navigate to={redirectPath} replace />;
     }
 
@@ -51,16 +52,16 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar user={user} isAuthenticated={isAuthenticated} />
       <div className="flex h-screen">
-        <Sidebar />
+        <Sidebar user={user} isAuthenticated={isAuthenticated} />
         <div className="content overflow-x-hidden overflow-scroll w-full p-4 lg:p-12">
           <Routes>
             <Route
               path="/"
               element={
                 <ProtectedRoute>
-                  <Home />
+                  <Home user={user} />
                 </ProtectedRoute>
               }
             />
