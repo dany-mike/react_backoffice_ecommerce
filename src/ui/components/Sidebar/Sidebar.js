@@ -21,6 +21,10 @@ function Sidebar({ isAuthenticated, user }) {
   // TODO fetch pages from API cms module
   const boLinks = [
     {
+      label: "Create Admin",
+      path: "/register",
+    },
+    {
       label: "Home",
       path: "/",
     },
@@ -53,14 +57,6 @@ function Sidebar({ isAuthenticated, user }) {
         />
       </div>
       <Menu iconShape="square">
-        {isAuthenticated && user?.role === "superAdmin" ? (
-          <MenuItem>
-            Create Admin
-            <Link to="/register" />
-          </MenuItem>
-        ) : (
-          <></>
-        )}
         {isAuthenticated ? (
           boLinks.map((item, index) => (
             <MenuItem key={index}>
