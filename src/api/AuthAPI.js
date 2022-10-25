@@ -18,8 +18,8 @@ export function login(email, password) {
     .catch((err) => err);
 }
 
-export function getCurrentUser(userId) {
-  return API.get(`/auth/user/${userId}`)
+export function getCurrentUser() {
+  return API.get(`/auth/me`)
     .then((res) => res)
     .catch((err) => err);
 }
