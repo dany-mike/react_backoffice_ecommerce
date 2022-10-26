@@ -4,7 +4,7 @@ import { setToken } from "./APIUtils";
 
 export function fetchProducts() {
   return API.get("/products")
-    .then((res) => res)
+    .then((res) => res.data)
     .catch((err) => err);
 }
 
