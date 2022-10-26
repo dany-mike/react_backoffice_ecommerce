@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { fetchProducts } from "../../api/ProductsAPI";
 import useAuth from "../../context/auth";
+import Button from "../components/Button/Button";
 import ProductCard from "../components/ProductCard/ProductCard";
 
 export default function Products() {
@@ -30,6 +31,9 @@ export default function Products() {
             key={product.id}
           />
         ))}
+      <Button classNameValue="mt-4 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2 hover:cursor-pointer">
+        Add product
+      </Button>
     </div>
   );
 }
