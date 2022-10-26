@@ -8,14 +8,41 @@ export function fetchProducts() {
     .catch((err) => err);
 }
 
-export function createProduct(email, password, firstname, lastname, role) {
-  return API.post("/products", { headers: authHeader() })
+export function createProduct(name, price, quantity, description, image) {
+  return API.post(
+    "/products",
+    {
+      name,
+      price,
+      quantity,
+      description,
+      image,
+    },
+    { headers: authHeader() }
+  )
     .then((res) => res)
     .catch((err) => err);
 }
 
-export async function updateProduct(id) {
-  return API.put(`/products/${id}`, { headers: authHeader() })
+export async function updateProduct(
+  id,
+  name,
+  price,
+  quantity,
+  description,
+  image
+) {
+  return API.put(
+    `/products/${id}`,
+    {
+      name,
+      price,
+      quantity,
+      description,
+      image,
+    },
+    { headers: authHeader() }
+  )
     .then((res) => res.data)
     .catch((err) => console.log(err));
 }
