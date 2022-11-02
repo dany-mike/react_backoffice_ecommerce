@@ -101,11 +101,11 @@ function App() {
             <Route
               path="/register"
               element={
-                <ProtectedRoute>
-                  <LayoutPage title="Register">
-                    <Register user={user} />
-                  </LayoutPage>
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <LayoutPage title="Register">
+                  <Register user={user} />
+                </LayoutPage>
+                // </ProtectedRoute>
               }
             />
             <Route
