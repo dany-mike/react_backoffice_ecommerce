@@ -25,11 +25,11 @@ export default function Products() {
         {products &&
           products.map((product) => (
             <ProductCard
-              className=""
               description={product.description}
               name={product.name}
               price={product.price}
               quantity={product.quantity}
+              id={product.id}
               key={product.id}
             />
           ))}

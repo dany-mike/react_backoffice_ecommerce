@@ -8,6 +8,12 @@ export function fetchProducts() {
     .catch((err) => err);
 }
 
+export function fetchProduct(id) {
+  return API.get(`/products/${id}`)
+    .then((res) => res.data)
+    .catch((err) => err);
+}
+
 export function createProduct(name, price, quantity, description, image) {
   return API.post(
     "/products",

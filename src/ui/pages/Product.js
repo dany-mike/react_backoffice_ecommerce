@@ -1,22 +1,28 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { fetchProducts } from "../../api/ProductsAPI";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchProduct } from "../../api/ProductsAPI";
 import useAuth from "../../context/auth";
-import Button from "../components/Button/Button";
-import ProductCard from "../components/ProductCard/ProductCard";
+import ProductForm from "../components/ProductForm/ProductForm";
 
 export default function Product() {
-  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+  const params = useParams();
+
   const {
     state: { user },
   } = useAuth();
 
   useEffect(() => {
     (async () => {
-      const response = await fetchProducts();
-      setProducts(response);
+      const response = await fetchProduct(params?.id);
+      setProduct(response);
     })();
-  }, [user]);
+  }, [user, params]);
 
-  return <div>Product details</div>;
+  return (
+    <div className="edit-product">
+      <p className="text-xl font-semibold">Edit {product?.name}</p>
+      <ProductForm />
+    </div>
+  );
 }
