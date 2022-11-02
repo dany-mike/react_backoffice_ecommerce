@@ -11,7 +11,7 @@ function handleLoginResponse(response) {
 
 export function login(email, password) {
   return API.post("/auth/signin", {
-    email,
+    username: email,
     password,
   })
     .then((res) => handleLoginResponse(res))
@@ -19,7 +19,7 @@ export function login(email, password) {
 }
 
 export function getCurrentUser() {
-  return API.get(`/auth/me`)
+  return API.get(`/users/me`)
     .then((res) => res)
     .catch((err) => err);
 }

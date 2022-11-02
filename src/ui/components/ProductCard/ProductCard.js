@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 
 export default function ProductCard({ name, description, price, quantity }) {
   return (
-    <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div className="max-w-lg bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-full mt-4 mr-4">
       <Link to="/">
         <img
           className="rounded-t-lg"
@@ -19,9 +19,9 @@ export default function ProductCard({ name, description, price, quantity }) {
           <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             Price: {price}€
           </h5>
-          <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+          {/* <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             Quantity: *{quantity}
-          </h5>
+          </h5> */}
         </Link>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           {description}
