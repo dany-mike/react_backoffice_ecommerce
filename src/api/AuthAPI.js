@@ -11,15 +11,15 @@ function handleLoginResponse(response) {
 
 export function login(email, password) {
   return API.post("/auth/signin", {
-    email,
+    username: email,
     password,
   })
     .then((res) => handleLoginResponse(res))
     .catch((err) => err);
 }
 
-export function getCurrentUser(userId) {
-  return API.get(`/auth/user/${userId}`)
+export function getCurrentUser() {
+  return API.get(`/users/me`)
     .then((res) => res)
     .catch((err) => err);
 }
