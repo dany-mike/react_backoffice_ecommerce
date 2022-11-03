@@ -27,7 +27,7 @@ export default function ProductForm({ productInfo }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data) => {
-    const user = await updateProduct();
+    const user = await updateProduct(productInfo.id, data.name, data.price, data.quantity, data.description, '');
 
     if (user?.data?.message) {
       setErrorMessage(user?.data?.message);
@@ -72,6 +72,39 @@ export default function ProductForm({ productInfo }) {
             </ErrorMessageRendered>
           )}
         />
+        {/* TODO: Description Add TextArea component */}
+         <Input
+          inputLabel="Product quantity"
+          type="number"
+          name="quantity"
+          required="Quantity is required"
+          register={register}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="quantity"
+          render={() => (
+            <ErrorMessageRendered>
+              {errors?.quantity?.message}
+            </ErrorMessageRendered>
+          )}
+        />
+        <Input
+          inputLabel="Product image"
+          type="text"
+          name="image"
+          register={register}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="image"
+          render={() => (
+            <ErrorMessageRendered>
+              {errors?.image?.message}
+            </ErrorMessageRendered>
+          )}
+        />
+
         {errorMessage ? (
           <ErrorMessageRendered>{errorMessage}</ErrorMessageRendered>
         ) : (
