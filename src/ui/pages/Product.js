@@ -16,7 +16,7 @@ export default function Product() {
     (async () => {
       setProduct(await fetchProduct(params?.id));
     })();
-  }, [user]);
+  }, [params?.id, user]);
 
   return (
     <div className="edit-product">

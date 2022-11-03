@@ -6,6 +6,7 @@ import { updateProduct } from "../../../api/ProductsAPI";
 import ErrorMessageRendered from "../ErrorMessageRendered/ErrorMessageRendered";
 import Input from "../Input/Input";
 import SubmitButton from "../SubmitButton/SubmitButton";
+import TextArea from "../TextArea/TextArea";
 
 export default function ProductForm({ productInfo }) {
   const {
@@ -27,7 +28,14 @@ export default function ProductForm({ productInfo }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data) => {
-    const user = await updateProduct(productInfo.id, data.name, data.price, data.quantity, data.description, '');
+    const user = await updateProduct(
+      productInfo.id,
+      data.name,
+      data.price,
+      data.quantity,
+      data.description,
+      ""
+    );
 
     if (user?.data?.message) {
       setErrorMessage(user?.data?.message);
@@ -72,8 +80,9 @@ export default function ProductForm({ productInfo }) {
             </ErrorMessageRendered>
           )}
         />
+        <TextArea label="Description" labelClass="" name="description" errors={errors} />
         {/* TODO: Description Add TextArea component */}
-         <Input
+        <Input
           inputLabel="Product quantity"
           type="number"
           name="quantity"
