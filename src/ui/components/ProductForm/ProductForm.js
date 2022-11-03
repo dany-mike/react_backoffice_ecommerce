@@ -1,7 +1,87 @@
-export default function ProductForm() {
+import { ErrorMessage } from "@hookform/error-message";
+import { useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { updateProduct } from "../../../api/ProductsAPI";
+import ErrorMessageRendered from "../ErrorMessageRendered/ErrorMessageRendered";
+import Input from "../Input/Input";
+import SubmitButton from "../SubmitButton/SubmitButton";
+
+export default function ProductForm({ productInfo }) {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: useMemo(() => {
+      return productInfo;
+    }, [productInfo]),
+  });
+
+  useEffect(() => {
+    reset(productInfo);
+  }, [productInfo, reset]);
+
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onSubmit = async (data) => {
+    const user = await updateProduct();
+
+    if (user?.data?.message) {
+      setErrorMessage(user?.data?.message);
+      return;
+    }
+
+    navigate("/products");
+  };
+
   return (
-  <div>
-    <p>Product form</p>
-  </div>
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          inputLabel="Product name"
+          type="text"
+          name="name"
+          required="Product is required"
+          register={register}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="product"
+          render={() => (
+            <ErrorMessageRendered>
+              {errors?.product?.message}
+            </ErrorMessageRendered>
+          )}
+        />
+        <Input
+          inputLabel="Product price"
+          type="number"
+          name="price"
+          required="Price is required"
+          register={register}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="price"
+          render={() => (
+            <ErrorMessageRendered>
+              {errors?.price?.message}
+            </ErrorMessageRendered>
+          )}
+        />
+        {errorMessage ? (
+          <ErrorMessageRendered>{errorMessage}</ErrorMessageRendered>
+        ) : (
+          <></>
+        )}
+        <SubmitButton
+          value="Update product"
+          classNameValue="text-white flex justify-center hover:cursor-pointer bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm py-2.5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-full mt-4"
+        />
+      </form>{" "}
+    </div>
   );
 }

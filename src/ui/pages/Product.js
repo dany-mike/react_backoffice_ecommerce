@@ -14,15 +14,14 @@ export default function Product() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetchProduct(params?.id);
-      setProduct(response);
+      setProduct(await fetchProduct(params?.id));
     })();
-  }, [user, params]);
+  }, [user]);
 
   return (
     <div className="edit-product">
       <p className="text-xl font-semibold">Edit {product?.name}</p>
-      <ProductForm />
+      {product ? <ProductForm productInfo={product} /> : <div>Loading...</div>}
     </div>
   );
 }
