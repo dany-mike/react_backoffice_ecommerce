@@ -1,19 +1,17 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./ui/pages/Home";
-import Products from "./ui/pages/Products";
-import TextManager from "./ui/pages/TextManager";
-import Users from "./ui/pages/Users";
-import Sidebar from "./ui/components/Sidebar/Sidebar";
-import Navbar from "./ui/components/Navbar/NavBar";
-import Login from "./ui/pages/Login";
-import Register from "./ui/pages/Register";
-import useAuth, { AuthProvider } from "./context/auth";
 import { useEffect } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { getCurrentUser } from "./api/AuthAPI";
-import { getLocalStorageValue } from "./utils";
+import useAuth, { AuthProvider } from "./context/auth";
 import LayoutPage from "./ui/components/LayoutPage/LayoutPage";
-import EditProduct from "./ui/pages/EditProduct";
+import Navbar from "./ui/components/Navbar/NavBar";
+import Sidebar from "./ui/components/Sidebar/Sidebar";
 import AddProduct from "./ui/pages/AddProduct";
+import EditProduct from "./ui/pages/EditProduct";
+import Home from "./ui/pages/Home";
+import Login from "./ui/pages/Login";
+import Products from "./ui/pages/Products";
+import Register from "./ui/pages/Register";
+import { getLocalStorageValue } from "./utils";
 
 
 function App() {
@@ -71,16 +69,6 @@ function App() {
               }
             />
             <Route
-              path="/users"
-              element={
-                <ProtectedRoute>
-                  <LayoutPage title="Users">
-                    <Users user={user} />
-                  </LayoutPage>
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/products"
               element={
                 <ProtectedRoute>
@@ -118,16 +106,6 @@ function App() {
                   <Register user={user} />
                 </LayoutPage>
                 // </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/cms"
-              element={
-                <ProtectedRoute>
-                  <LayoutPage title="Text manager">
-                    <TextManager />
-                  </LayoutPage>
-                </ProtectedRoute>
               }
             />
             <Route path="/login" element={<Login />} />

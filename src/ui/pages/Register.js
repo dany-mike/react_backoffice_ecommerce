@@ -37,7 +37,7 @@ export default function Register({ user }) {
 
   return (
     <div className="register">
-      {user?.role === "superAdmin" ? (
+      {user?.roles.includes("superAdmin") ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             inputLabel="Email"
