@@ -14,6 +14,12 @@ export function fetchProduct(id) {
     .catch((err) => err);
 }
 
+export function deleteProduct(id) {
+  return API.delete(`/products/${id}`)
+    .then((res) => res.data)
+    .catch((err) => err);
+}
+
 export function createProduct(name, price, quantity, description, image) {
   return API.post(
     "/products",

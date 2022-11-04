@@ -1,7 +1,22 @@
 import { Link } from "react-router-dom";
+import { deleteProduct, fetchProducts } from "../../../api/ProductsAPI";
 import Button from "../Button/Button";
 
-export default function ProductCard({ name, description, price, id }) {
+export default function ProductCard({
+  name,
+  description,
+  price,
+  id,
+  quantity,
+}) {
+ 
+
+  async function handleDelete(e, id) {
+    e.preventDefault();
+    await deleteProduct(id)
+    const products = await fetchProducts()
+  }
+
   return (
     <div className="max-w-lg bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-full mt-4 mr-4">
       <Link to={`/products/${id}`}>
@@ -19,9 +34,9 @@ export default function ProductCard({ name, description, price, id }) {
           <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             Price: {price}€
           </h5>
-          {/* <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+          <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             Quantity: *{quantity}
-          </h5> */}
+          </h5>
         </Link>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           {description}
@@ -31,7 +46,11 @@ export default function ProductCard({ name, description, price, id }) {
             Edit
           </Button>
         </Link>
-        <Button classNameValue="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 hover:cursor-pointer">
+        <Button
+          handleClick={handleDelete}
+          parameter={id}
+          classNameValue="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 hover:cursor-pointer"
+        >
           Delete
         </Button>
       </div>

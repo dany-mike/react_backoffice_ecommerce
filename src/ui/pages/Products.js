@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchProducts } from "../../api/ProductsAPI";
 import useAuth from "../../context/auth";
 import Button from "../components/Button/Button";

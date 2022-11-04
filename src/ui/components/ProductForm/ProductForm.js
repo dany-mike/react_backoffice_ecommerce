@@ -28,7 +28,6 @@ export default function ProductForm({ productInfo }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data) => {
-    console.log(data)
     const user = await updateProduct(
       productInfo.id,
       data.name,
