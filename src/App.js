@@ -12,7 +12,9 @@ import { useEffect } from "react";
 import { getCurrentUser } from "./api/AuthAPI";
 import { getLocalStorageValue } from "./utils";
 import LayoutPage from "./ui/components/LayoutPage/LayoutPage";
-import Product from "./ui/pages/Product";
+import EditProduct from "./ui/pages/EditProduct";
+import AddProduct from "./ui/pages/AddProduct";
+
 
 function App() {
   const {
@@ -89,11 +91,21 @@ function App() {
               }
             />
             <Route
-              path="/products/:id"
+              path="/products/edit/:id"
               element={
                 <ProtectedRoute>
-                  <LayoutPage title="Product page">
-                    <Product />
+                  <LayoutPage title="Edit product">
+                    <EditProduct />
+                  </LayoutPage>
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/products/add"
+              element={
+                <ProtectedRoute>
+                  <LayoutPage title="Add product">
+                    <AddProduct />
                   </LayoutPage>
                 </ProtectedRoute>
               }
