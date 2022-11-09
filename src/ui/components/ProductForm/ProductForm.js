@@ -17,7 +17,6 @@ export default function ProductForm({ productInfo, isEdit }) {
     handleSubmit,
     reset,
     watch,
-    // setValue,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
