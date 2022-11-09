@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createProduct, updateProduct } from "../../../api/ProductsAPI";
 import Button from "../Button/Button";
 import ErrorMessageRendered from "../ErrorMessageRendered/ErrorMessageRendered";
+import FileUploadInput from "../FileUploadInput/FileUploadInput";
 import Input from "../Input/Input";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import TextArea from "../TextArea/TextArea";
@@ -112,12 +113,7 @@ export default function ProductForm({ productInfo, isEdit }) {
             </ErrorMessageRendered>
           )}
         />
-        <Input
-          inputLabel="Product image"
-          type="text"
-          name="image"
-          register={register}
-        />
+        <FileUploadInput label="Upload product image" register={register} />
         <ErrorMessage
           errors={errors}
           name="image"
