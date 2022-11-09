@@ -37,14 +37,14 @@ export default function ProductForm({ productInfo, isEdit }) {
           Number(data.price),
           Number(data.quantity),
           data.description,
-          data.image
+          data?.file
         )
       : await createProduct(
           data.name,
           Number(data.price),
           Number(data.quantity),
           data.description,
-          data.image
+          data?.file
         );
 
     if (user?.data?.message) {

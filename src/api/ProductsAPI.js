@@ -20,18 +20,19 @@ export function deleteProduct(id) {
     .catch((err) => err);
 }
 
-export function createProduct(name, price, quantity, description, image) {
-  return API.post(
-    "/products",
-    {
-      name,
-      price,
-      quantity,
-      description,
-      image,
-    },
-    { headers: authHeader() }
-  )
+export function createProduct(name, price, quantity, description, imageFiles) {
+  const bodyFormData = new FormData();
+  bodyFormData.append("name", name);
+  bodyFormData.append("price", price);
+  bodyFormData.append("quantity", quantity);
+  bodyFormData.append("description", description);
+  const file = imageFiles[0];
+  bodyFormData.append("file", file, file.name);
+
+  return API.post("/products", bodyFormData, {
+    headers: authHeader(),
+    "Content-Type": "multipart/form-data",
+  })
     .then((res) => res)
     .catch((err) => err);
 }
@@ -42,19 +43,20 @@ export async function updateProduct(
   price,
   quantity,
   description,
-  image
+  imageFiles
 ) {
-  return API.put(
-    `/products/${id}`,
-    {
-      name,
-      price,
-      quantity,
-      description,
-      image,
-    },
-    { headers: authHeader() }
-  )
+  const bodyFormData = new FormData();
+  bodyFormData.append("name", name);
+  bodyFormData.append("price", price);
+  bodyFormData.append("quantity", quantity);
+  bodyFormData.append("description", description);
+  const file = imageFiles[0];
+  bodyFormData.append("file", file, file.name);
+
+  return API.put(`/products/${id}`, bodyFormData, {
+    headers: authHeader(),
+    "Content-Type": "multipart/form-data",
+  })
     .then((res) => res.data)
     .catch((err) => console.log(err));
 }
