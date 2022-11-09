@@ -1,4 +1,4 @@
-export default function FileUploadInput({ label, register }) {
+export default function FileUploadInput({ label, register, onChange }) {
   return (
     <>
       <p className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 mt-2">
@@ -33,6 +33,7 @@ export default function FileUploadInput({ label, register }) {
             id="dropzone-file"
             type="file"
             className="hidden"
+            onChange={onChange}
             {...register("file")}
           />
         </label>

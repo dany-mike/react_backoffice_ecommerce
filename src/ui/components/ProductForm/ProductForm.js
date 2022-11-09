@@ -15,6 +15,8 @@ export default function ProductForm({ productInfo, isEdit }) {
     register,
     handleSubmit,
     reset,
+    watch,
+    // setValue,
     formState: { errors },
   } = useForm({
     defaultValues: useMemo(() => {
@@ -22,12 +24,25 @@ export default function ProductForm({ productInfo, isEdit }) {
     }, [isEdit, productInfo]),
   });
 
-  useEffect(() => {
-    reset(productInfo);
-  }, [productInfo, reset]);
+  console.log(watch("file"));
 
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const [imageName, setImageName] = useState("");
+
+  useEffect(() => {
+    reset(productInfo);
+    const subscription = watch((value, { name, type }) => {
+      setImageName(value.file[0].name);
+    });
+    return () => subscription.unsubscribe();
+  }, [productInfo, reset, watch]);
+
+  // const onChangeFile = (e) => {
+  //   console.log(e.target.files);
+  //   setValue("image", e.target.files);
+  //   setImageName(e.target.files[0]?.name);
+  // }
 
   const onSubmit = async (data) => {
     const user = isEdit
@@ -113,7 +128,13 @@ export default function ProductForm({ productInfo, isEdit }) {
             </ErrorMessageRendered>
           )}
         />
-        <FileUploadInput label="Upload product image" register={register} />
+        <FileUploadInput
+          label="Upload product image"
+          register={register}
+          // onChange={onChangeFile}
+        />
+        {/* TODO: create infoMessage component */}
+        <p>Added image: {imageName}</p>
         <ErrorMessage
           errors={errors}
           name="image"
@@ -123,7 +144,6 @@ export default function ProductForm({ productInfo, isEdit }) {
             </ErrorMessageRendered>
           )}
         />
-
         {errorMessage ? (
           <ErrorMessageRendered>{errorMessage}</ErrorMessageRendered>
         ) : (
