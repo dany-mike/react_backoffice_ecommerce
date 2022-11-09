@@ -39,6 +39,7 @@ export default function Products() {
               quantity={product.quantity}
               id={product.id}
               key={product.id}
+              image={product.image}
               handleDelete={handleDelete}
             />
           ))}
