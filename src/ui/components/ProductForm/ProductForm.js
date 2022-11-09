@@ -6,6 +6,7 @@ import { createProduct, updateProduct } from "../../../api/ProductsAPI";
 import Button from "../Button/Button";
 import ErrorMessageRendered from "../ErrorMessageRendered/ErrorMessageRendered";
 import FileUploadInput from "../FileUploadInput/FileUploadInput";
+import InfoMessage from "../InfoMessage/InfoMessage";
 import Input from "../Input/Input";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import TextArea from "../TextArea/TextArea";
@@ -37,12 +38,6 @@ export default function ProductForm({ productInfo, isEdit }) {
     });
     return () => subscription.unsubscribe();
   }, [productInfo, reset, watch]);
-
-  // const onChangeFile = (e) => {
-  //   console.log(e.target.files);
-  //   setValue("image", e.target.files);
-  //   setImageName(e.target.files[0]?.name);
-  // }
 
   const onSubmit = async (data) => {
     const user = isEdit
@@ -128,13 +123,12 @@ export default function ProductForm({ productInfo, isEdit }) {
             </ErrorMessageRendered>
           )}
         />
-        <FileUploadInput
-          label="Upload product image"
-          register={register}
-          // onChange={onChangeFile}
-        />
-        {/* TODO: create infoMessage component */}
-        <p>Added image: {imageName}</p>
+        <FileUploadInput label="Upload product image" register={register} />
+        {imageName ? (
+          <InfoMessage>Added image: {imageName}</InfoMessage>
+        ) : (
+          <></>
+        )}
         <ErrorMessage
           errors={errors}
           name="image"
