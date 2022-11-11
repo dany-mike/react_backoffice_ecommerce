@@ -1,6 +1,6 @@
 import { getCurrentUser, login } from "../../api/AuthAPI";
 import useAuth from "../../context/auth";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Input from "../components/Input/Input";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
@@ -8,11 +8,14 @@ import ErrorMessageRendered from "../components/ErrorMessageRendered/ErrorMessag
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLocalStorageValue } from "../../utils";
+import { useLoading } from "../../context/loading";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 export default function Login() {
   const { dispatch } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { loading, setLoading } = useLoading();
 
   const {
     register,
@@ -20,12 +23,14 @@ export default function Login() {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
+    setLoading(true);
     const response = await login(data.email, data.password);
     if (response?.statusCode === 200) {
       const payload = await getCurrentUser(getLocalStorageValue("user")?.id);
       const { token, ...user } = payload.data;
       dispatch({ type: "LOAD_USER", user });
       dispatch({ type: "LOGIN" });
+      setLoading(false);
       navigate("/");
     } else {
       setErrorMessage(response?.data?.message);
@@ -33,7 +38,9 @@ export default function Login() {
     }
   };
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div className="login">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input

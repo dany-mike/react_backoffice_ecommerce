@@ -1,37 +1,44 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteProduct, fetchProducts } from "../../api/ProductsAPI";
-import useAuth from "../../context/auth";
+import { useLoading } from "../../context/loading";
 import Button from "../components/Button/Button";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import ProductCard from "../components/ProductCard/ProductCard";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const {
-    state: { user },
-  } = useAuth();
+
+  const { loading, setLoading } = useLoading();
 
   useEffect(() => {
-    (async () => {
-      const response = await fetchProducts();
-      setProducts(response);
-    })();
-  }, [user]);
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await fetchProducts();
+      setProducts(data);
+      setLoading(false);
+    };
+    fetchData().catch(console.error);
+  }, [setLoading]);
 
   async function handleDelete(e, id) {
+    setLoading(true);
     e.preventDefault();
     console.log(id);
     await deleteProduct(id);
     const products = await fetchProducts();
     setProducts(products);
+    setLoading(false);
   }
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div>
       <h1 className="text-xl">My products</h1>
       <div className="flex flex-wrap">
-        {products &&
-          products.map((product) => (
+        {products.length > 0 &&
+          products?.map((product) => (
             <ProductCard
               description={product.description}
               name={product.name}

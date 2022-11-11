@@ -1,13 +1,15 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { createProduct, updateProduct } from "../../../api/ProductsAPI";
+import { useLoading } from "../../../context/loading";
 import Button from "../Button/Button";
 import ErrorMessageRendered from "../ErrorMessageRendered/ErrorMessageRendered";
 import FileUploadInput from "../FileUploadInput/FileUploadInput";
 import InfoMessage from "../InfoMessage/InfoMessage";
 import Input from "../Input/Input";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import TextArea from "../TextArea/TextArea";
 
@@ -24,7 +26,7 @@ export default function ProductForm({ productInfo, isEdit }) {
     }, [isEdit, productInfo]),
   });
 
-  console.log(watch("file"));
+  const { loading, setLoading } = useLoading();
 
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,27 +34,28 @@ export default function ProductForm({ productInfo, isEdit }) {
 
   useEffect(() => {
     reset(productInfo);
-    const subscription = watch((value, { name, type }) => {
-      setImageName(value.file[0].name);
+    const subscription = watch((value) => {
+      setImageName(value.file[0]?.name);
     });
     return () => subscription.unsubscribe();
   }, [productInfo, reset, watch]);
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const user = isEdit
       ? await updateProduct(
-          productInfo.id,
-          data.name,
-          Number(data.price),
-          Number(data.quantity),
-          data.description,
+          productInfo?.id,
+          data?.name,
+          Number(data?.price),
+          Number(data?.quantity),
+          data?.description,
           data?.file
         )
       : await createProduct(
           data.name,
-          Number(data.price),
-          Number(data.quantity),
-          data.description,
+          Number(data?.price),
+          Number(data?.quantity),
+          data?.description,
           data?.file
         );
 
@@ -60,11 +63,13 @@ export default function ProductForm({ productInfo, isEdit }) {
       setErrorMessage(user?.data?.message);
       return;
     }
-
+    setLoading(false);
     navigate("/products");
   };
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input

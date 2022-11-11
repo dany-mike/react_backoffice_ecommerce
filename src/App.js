@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { getCurrentUser } from "./api/AuthAPI";
 import useAuth, { AuthProvider } from "./context/auth";
+import { LoadingProvider } from "./context/loading";
 import LayoutPage from "./ui/components/LayoutPage/LayoutPage";
 import Navbar from "./ui/components/Navbar/NavBar";
 import Sidebar from "./ui/components/Sidebar/Sidebar";
@@ -12,7 +13,6 @@ import Login from "./ui/pages/Login";
 import Products from "./ui/pages/Products";
 import Register from "./ui/pages/Register";
 import { getLocalStorageValue } from "./utils";
-
 
 function App() {
   const {
@@ -88,7 +88,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-             <Route
+            <Route
               path="/products/add"
               element={
                 <ProtectedRoute>
@@ -119,7 +119,9 @@ function App() {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
-  <AuthProvider>
-    <App />
-  </AuthProvider>
+  <LoadingProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </LoadingProvider>
 );
