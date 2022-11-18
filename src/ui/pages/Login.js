@@ -1,15 +1,16 @@
-import { getCurrentUser, login } from "../../api/AuthAPI";
-import useAuth from "../../context/auth";
-import { set, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import Input from "../components/Input/Input";
-import SubmitButton from "../components/SubmitButton/SubmitButton";
-import ErrorMessageRendered from "../components/ErrorMessageRendered/ErrorMessageRendered";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { getLocalStorageValue } from "../../utils";
+import { login } from "../../api/AuthAPI";
+import { fetchCurrentUser } from "../../api/UsersAPI";
+import useAuth from "../../context/auth";
 import { useLoading } from "../../context/loading";
+import { getLocalStorageValue } from "../../utils";
+import ErrorMessageRendered from "../components/ErrorMessageRendered/ErrorMessageRendered";
+import Input from "../components/Input/Input";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import SubmitButton from "../components/SubmitButton/SubmitButton";
 
 export default function Login() {
   const { dispatch } = useAuth();
@@ -26,7 +27,7 @@ export default function Login() {
     setLoading(true);
     const response = await login(data.email, data.password);
     if (response?.statusCode === 200) {
-      const payload = await getCurrentUser(getLocalStorageValue("user")?.id);
+      const payload = await fetchCurrentUser(getLocalStorageValue("user")?.id);
       const { token, ...user } = payload.data;
       dispatch({ type: "LOAD_USER", user });
       dispatch({ type: "LOGIN" });

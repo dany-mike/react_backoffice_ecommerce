@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { getCurrentUser } from "./api/AuthAPI";
+import { fetchCurrentUser } from "./api/UsersAPI";
 import useAuth, { AuthProvider } from "./context/auth";
 import { LoadingProvider } from "./context/loading";
 import LayoutPage from "./ui/components/LayoutPage/LayoutPage";
@@ -12,6 +12,7 @@ import Home from "./ui/pages/Home";
 import Login from "./ui/pages/Login";
 import Products from "./ui/pages/Products";
 import Register from "./ui/pages/Register";
+import Users from "./ui/pages/Users";
 import { getLocalStorageValue } from "./utils";
 
 function App() {
@@ -25,7 +26,9 @@ function App() {
 
     async function fetchUser() {
       try {
-        const payload = await getCurrentUser(getLocalStorageValue("user")?.id);
+        const payload = await fetchCurrentUser(
+          getLocalStorageValue("user")?.id
+        );
         const { token, ...user } = payload.data;
         if (!ignore) {
           dispatch({ type: "LOAD_USER", user });
@@ -106,6 +109,16 @@ function App() {
                   <Register user={user} />
                 </LayoutPage>
                 // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute>
+                  <LayoutPage title="Users">
+                    <Users />
+                  </LayoutPage>
+                </ProtectedRoute>
               }
             />
             <Route path="/login" element={<Login />} />

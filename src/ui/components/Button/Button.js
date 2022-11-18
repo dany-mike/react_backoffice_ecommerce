@@ -9,7 +9,7 @@ export default function Button({
       className={classNameValue}
       onClick={(event) => (handleClick ? handleClick(event, parameter) : "")}
     >
-      {children}
+      <span className="p-2">{children}</span>
     </button>
   );
 }
