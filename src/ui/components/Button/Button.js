@@ -9,7 +9,7 @@ export default function Button({
       className={classNameValue}
       onClick={(event) => (handleClick ? handleClick(event, parameter) : "")}
     >
-      <span className="p-2">{children}</span>
+      <span className="py-2 px-3">{children}</span>
     </button>
   );
 }

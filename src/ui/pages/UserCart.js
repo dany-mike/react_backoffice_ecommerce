@@ -1,31 +1,40 @@
 import { useEffect, useState } from "react";
-import { fetchUserById, fetchUserCart } from "../../api/UsersAPI";
+import { useParams } from "react-router-dom";
+import { fetchUserById } from "../../api/UsersAPI";
 import { useLoading } from "../../context/loading";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import ProductCard from "../components/ProductCard/ProductCard";
 
 export default function UserCart() {
+  const params = useParams();
   const [user, setUser] = useState([]);
-  const [cart, setCart] = useState([]);
 
   const { loading, setLoading } = useLoading();
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       setLoading(true);
-      const data = await fetchUserById();
-      const cart = await fetchUserCart();
-      setUser(data);
-      setCart(cart)
+      setUser(await fetchUserById(params?.userId));
       setLoading(false);
-    };
-    fetchData().catch(console.error);
-  }, [setLoading]);
-
+    })();
+  }, [params?.userId, setLoading]);
   return loading ? (
     <LoadingSpinner />
   ) : (
     <div className="p-4 max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-      User Cart
+          {user.firstname} {user.lastname} Cart
+          {/* {user.cart.products.length > 0 &&
+          user.cart.products?.map((product) => (
+            <ProductCard
+              description={product.description}
+              name={product.name}
+              price={product.price}
+              quantity={product.quantity}
+              id={product.id}
+              key={product.id}
+              image={product.image}
+            />
+          ))} */}
     </div>
   );
 }
