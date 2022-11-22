@@ -20,7 +20,7 @@ export default function UsersCard({ users }) {
                       </p>
                     </div>
                     <div className="text-white flex justify-center hover:cursor-pointer bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mt-1 ml-auto">
-                      <Link to={`/cart/${user.id}`}>
+                      <Link to={`/users/${user.id}`}>
                         <Button>User cart</Button>
                       </Link>
                     </div>

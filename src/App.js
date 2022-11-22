@@ -12,8 +12,8 @@ import Home from "./ui/pages/Home";
 import Login from "./ui/pages/Login";
 import Products from "./ui/pages/Products";
 import Register from "./ui/pages/Register";
+import UserInfo from "./ui/pages/UserInfo";
 import Users from "./ui/pages/Users";
-import UserCart from './ui/pages/UserCart'
 import { getLocalStorageValue } from "./utils";
 
 function App() {
@@ -123,11 +123,11 @@ function App() {
               }
             />
             <Route
-              path="/cart/:userId"
+              path="/users/:userId"
               element={
                 <ProtectedRoute>
-                  <LayoutPage title="User cart">
-                    <UserCart />
+                  <LayoutPage title="User info">
+                    <UserInfo />
                   </LayoutPage>
                 </ProtectedRoute>
               }
