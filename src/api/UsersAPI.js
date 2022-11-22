@@ -1,3 +1,4 @@
+import { authHeader } from "../utils";
 import API from "./APIUtils";
 
 export function fetchCurrentUser() {
@@ -14,7 +15,7 @@ export function fetchUsers() {
 }
 
 export function fetchUserById(id) {
-  return API.get(`/users/${id}`)
+  return API.get(`/users/${id}`, { headers: authHeader() })
     .then((res) => res.data)
     .catch((err) => err);
 }
