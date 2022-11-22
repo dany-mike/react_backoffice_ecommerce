@@ -1,7 +1,6 @@
 
 export default function CartItemCard({
   name,
-  description,
   price,
   quantity,
   image,
