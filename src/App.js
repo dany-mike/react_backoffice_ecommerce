@@ -1,18 +1,20 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./ui/pages/Home";
-import Products from "./ui/pages/Products";
-import TextManager from "./ui/pages/TextManager";
-import Users from "./ui/pages/Users";
-import Sidebar from "./ui/components/Sidebar/Sidebar";
-import Navbar from "./ui/components/Navbar/NavBar";
-import Login from "./ui/pages/Login";
-import Register from "./ui/pages/Register";
-import useAuth, { AuthProvider } from "./context/auth";
 import { useEffect } from "react";
-import { getCurrentUser } from "./api/AuthAPI";
-import { getLocalStorageValue } from "./utils";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { fetchCurrentUser } from "./api/UsersAPI";
+import useAuth, { AuthProvider } from "./context/auth";
+import { LoadingProvider } from "./context/loading";
 import LayoutPage from "./ui/components/LayoutPage/LayoutPage";
-import Product from "./ui/pages/Product";
+import Navbar from "./ui/components/Navbar/NavBar";
+import Sidebar from "./ui/components/Sidebar/Sidebar";
+import AddProduct from "./ui/pages/AddProduct";
+import EditProduct from "./ui/pages/EditProduct";
+import Home from "./ui/pages/Home";
+import Login from "./ui/pages/Login";
+import Products from "./ui/pages/Products";
+import Register from "./ui/pages/Register";
+import UserInfo from "./ui/pages/UserInfo";
+import Users from "./ui/pages/Users";
+import { getLocalStorageValue } from "./utils";
 
 function App() {
   const {
@@ -25,7 +27,9 @@ function App() {
 
     async function fetchUser() {
       try {
-        const payload = await getCurrentUser(getLocalStorageValue("user")?.id);
+        const payload = await fetchCurrentUser(
+          getLocalStorageValue("user")?.id
+        );
         const { token, ...user } = payload.data;
         if (!ignore) {
           dispatch({ type: "LOAD_USER", user });
@@ -69,16 +73,6 @@ function App() {
               }
             />
             <Route
-              path="/users"
-              element={
-                <ProtectedRoute>
-                  <LayoutPage title="Users">
-                    <Users user={user} />
-                  </LayoutPage>
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/products"
               element={
                 <ProtectedRoute>
@@ -89,11 +83,21 @@ function App() {
               }
             />
             <Route
-              path="/products/:id"
+              path="/products/edit/:id"
               element={
                 <ProtectedRoute>
-                  <LayoutPage title="Product page">
-                    <Product />
+                  <LayoutPage title="Edit product">
+                    <EditProduct />
+                  </LayoutPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/products/add"
+              element={
+                <ProtectedRoute>
+                  <LayoutPage title="Add product">
+                    <AddProduct />
                   </LayoutPage>
                 </ProtectedRoute>
               }
@@ -109,11 +113,21 @@ function App() {
               }
             />
             <Route
-              path="/cms"
+              path="/users"
               element={
                 <ProtectedRoute>
-                  <LayoutPage title="Text manager">
-                    <TextManager />
+                  <LayoutPage title="Users">
+                    <Users />
+                  </LayoutPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users/:userId"
+              element={
+                <ProtectedRoute>
+                  <LayoutPage title="User info">
+                    <UserInfo />
                   </LayoutPage>
                 </ProtectedRoute>
               }
@@ -129,7 +143,9 @@ function App() {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => (
-  <AuthProvider>
-    <App />
-  </AuthProvider>
+  <LoadingProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </LoadingProvider>
 );

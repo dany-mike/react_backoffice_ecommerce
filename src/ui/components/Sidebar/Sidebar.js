@@ -18,7 +18,6 @@ function Sidebar({ isAuthenticated, user }) {
   const stateValue = isMobile ? true : false;
   const [isCollapsed, setCollapsed] = useState(stateValue);
 
-  // TODO fetch pages from API cms module
   const boLinks = [
     {
       label: "Create Admin",
@@ -35,11 +34,7 @@ function Sidebar({ isAuthenticated, user }) {
     {
       label: "Users",
       path: "/users",
-    },
-    {
-      label: "Text Manager",
-      path: "/cms",
-    },
+    }
   ];
 
   return (

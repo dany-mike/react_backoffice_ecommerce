@@ -4,7 +4,7 @@ import { fetchProduct } from "../../api/ProductsAPI";
 import useAuth from "../../context/auth";
 import ProductForm from "../components/ProductForm/ProductForm";
 
-export default function Product() {
+export default function EditProduct() {
   const [product, setProduct] = useState([]);
   const params = useParams();
 
@@ -21,7 +21,11 @@ export default function Product() {
   return (
     <div className="edit-product">
       <p className="text-xl font-semibold">Edit {product?.name}</p>
-      {product ? <ProductForm productInfo={product} /> : <div>Loading...</div>}
+      {product ? (
+        <ProductForm productInfo={product} isEdit={true} />
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 }

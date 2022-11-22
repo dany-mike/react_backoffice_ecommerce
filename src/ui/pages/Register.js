@@ -1,10 +1,12 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createAdmin } from "../../api/AuthAPI";
+import { useLoading } from "../../context/loading";
 import ErrorMessageRendered from "../components/ErrorMessageRendered/ErrorMessageRendered";
 import Input from "../components/Input/Input";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import Select from "../components/Select/Select";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
 
@@ -15,10 +17,12 @@ export default function Register({ user }) {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const { loading, setLoading } = useLoading();
 
   const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const user = await createAdmin(
       data.email,
       data.password,
@@ -31,13 +35,15 @@ export default function Register({ user }) {
       setErrorMessage(user?.data?.message);
       return;
     }
-
+    setLoading(false);
     navigate("/users");
   };
 
-  return (
+  return loading ? (
+    <LoadingSpinner />
+  ) : (
     <div className="register">
-      {user?.role === "superAdmin" ? (
+      {user?.roles.includes("superAdmin") ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             inputLabel="Email"

@@ -18,28 +18,20 @@ export function login(email, password) {
     .catch((err) => err);
 }
 
-export function getCurrentUser() {
-  return API.get(`/users/me`)
-    .then((res) => res)
-    .catch((err) => err);
-}
-
 export function createAdmin(email, password, firstname, lastname, role) {
-  return API.post("/auth/createAdmin", {
-    email,
-    password,
-    firstname,
-    lastname,
-    role,
-  })
+  return API.post(
+    "/auth/createAdmin",
+    {
+      email,
+      password,
+      firstname,
+      lastname,
+      role,
+    },
+    { headers: authHeader() }
+  )
     .then((res) => res)
     .catch((err) => err);
-}
-
-export async function getAdminUsers() {
-  return API.get("/auth/admin-users", { headers: authHeader() })
-    .then((res) => res.data)
-    .catch((err) => console.log(err));
 }
 
 export function logout() {
