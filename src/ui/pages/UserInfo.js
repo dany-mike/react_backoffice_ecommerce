@@ -40,7 +40,7 @@ export default function UserInfo() {
       </div>
 
       <div className="flex flex-wrap">
-        {userInfo?.cart?.length > 0 &&
+        {userInfo?.cart?.length > 0 ? (
           userInfo.cart?.map((cart) => (
             <CartItemCard
               name={cart.product.name}
@@ -49,7 +49,13 @@ export default function UserInfo() {
               key={cart.id}
               image={cart.product.image}
             />
-          ))}
+          ))
+        ) : (
+          <p>
+            There is no items in {userInfo?.user?.firstname}{" "}
+            {userInfo?.user?.lastname}'s Cart
+          </p>
+        )}
       </div>
       <div className="font-semibold text-xl mt-8 flex items-center">
         <p className="mr-3">
@@ -70,7 +76,7 @@ export default function UserInfo() {
         </svg>
       </div>
       <div className="flex flex-wrap">
-        {userInfo?.wishlist?.length > 0 &&
+        {userInfo?.wishlist?.length > 0 ? (
           userInfo.wishlist?.map((wishlist) => (
             <WishlistItemCard
               name={wishlist.product.name}
@@ -78,7 +84,13 @@ export default function UserInfo() {
               key={wishlist.id}
               image={wishlist.product.image}
             />
-          ))}
+          ))
+        ) : (
+          <p>
+            There is not items in {userInfo?.user?.firstname}{" "}
+            {userInfo?.user?.lastname}'s Wishlist
+          </p>
+        )}
       </div>
     </>
   );

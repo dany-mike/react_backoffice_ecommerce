@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createAdmin } from "../../api/AuthAPI";
 import { useLoading } from "../../context/loading";
