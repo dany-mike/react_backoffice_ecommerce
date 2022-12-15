@@ -1,4 +1,3 @@
-import { getObjectLength } from "../../../utils";
 import Button from "../Button/Button";
 
 export default function OrderItemCard({
@@ -12,10 +11,9 @@ export default function OrderItemCard({
   billingAddress,
   setOrderDetails,
 }) {
-  const handleOrderDetails = (e, order) => {
+  const setOrderDetailsState = (e, order) => {
     e.preventDefault();
-    console.log(order);
-    getObjectLength(order) > 0 ? setOrderDetails(order) : setOrderDetails({});
+    setOrderDetails(order);
   };
   return (
     <div className="max-w-lg bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-full mt-4 mr-4">
@@ -27,16 +25,10 @@ export default function OrderItemCard({
           Status: {status}
         </p>
         <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-          Total: {totalPrice}€
+          Order total: {totalPrice}€
         </p>
-        {/* <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-          Subtotal: {subtotal}€
-        </p>
-        <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-          Tax: {tax}€
-        </p> */}
         <Button
-          handleClick={handleOrderDetails}
+          handleClick={setOrderDetailsState}
           parameter={{
             orderId,
             status,

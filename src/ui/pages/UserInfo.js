@@ -5,6 +5,7 @@ import { useLoading } from "../../context/loading";
 import { getObjectLength } from "../../utils";
 import CartItemCard from "../components/CartItemCard/CartItemCard";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import OrderDetailsCard from "../components/OrderDetailsCard/OrderDetailsCard";
 import OrderItemCard from "../components/OrderItemCard/OrderItemCard";
 import WishlistItemCard from "../components/WishlistItemCard/WishlistItemCard";
 
@@ -25,7 +26,20 @@ export default function UserInfo() {
 
   function OrderContent() {
     if (getObjectLength(orderDetails) > 0) {
-      return <>Order details</>;
+      return (
+        <OrderDetailsCard
+          billingAddress={orderDetails.billingAddress}
+          orderId={orderDetails.orderId}
+          orderItems={orderDetails.orderItems}
+          shippingAddress={orderDetails.shippingAddress}
+          status={orderDetails.status}
+          subtotal={orderDetails.subtotal}
+          tax={orderDetails.tax}
+          totalPrice={orderDetails.totalPrice}
+          key={orderDetails.orderId}
+          setOrderDetails={setOrderDetails}
+        />
+      );
     } else {
       return userInfo.order?.map((order) => (
         <OrderItemCard
