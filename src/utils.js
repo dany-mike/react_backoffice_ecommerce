@@ -20,3 +20,7 @@ export function authHeader() {
     return {};
   }
 }
+
+export function getObjectLength(myObj) {
+  return Object.keys(myObj).length;
+}
