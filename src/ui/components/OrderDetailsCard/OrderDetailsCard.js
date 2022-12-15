@@ -33,8 +33,22 @@ export default function OrderDetailsCard({
         <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
           Tax: {tax}€
         </p>
-        {/* Shipping address */}
-        {/* billing address */}
+        <div className="mb-1 text-lg tracking-tight text-gray-900 dark:text-white shadow-md rounded-lg border border-gray-200">
+          <p className="p-4">
+            <span className="text-xl font-bold">Shipping address: </span>
+            {shippingAddress.countryCode} {shippingAddress.city}{" "}
+            {shippingAddress.streetNumber} {shippingAddress.streetName}{" "}
+            {shippingAddress.postalCode}
+          </p>
+        </div>
+        <div className="mb-1 text-lg tracking-tight text-gray-900 dark:text-white shadow-md rounded-lg border border-gray-200">
+          <p className="p-4">
+            <span className="text-xl font-bold">Billing address: </span>
+            {billingAddress.countryCode} {billingAddress.city}{" "}
+            {billingAddress.streetNumber} {billingAddress.streetName}{" "}
+            {billingAddress.postalCode}
+          </p>
+        </div>
         {/* Order items */}
         <Button
           handleClick={handleBack}

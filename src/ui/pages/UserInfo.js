@@ -6,7 +6,7 @@ import { getObjectLength } from "../../utils";
 import CartItemCard from "../components/CartItemCard/CartItemCard";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import OrderDetailsCard from "../components/OrderDetailsCard/OrderDetailsCard";
-import OrderItemCard from "../components/OrderItemCard/OrderItemCard";
+import OrderItemCard from "../components/OrderCard/OrderCard";
 import WishlistItemCard from "../components/WishlistItemCard/WishlistItemCard";
 
 export default function UserInfo() {
