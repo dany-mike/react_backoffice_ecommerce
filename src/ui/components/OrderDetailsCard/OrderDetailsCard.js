@@ -1,4 +1,5 @@
 import Button from "../Button/Button";
+import ItemCard from "../ItemCard/ItemCard";
 
 export default function OrderDetailsCard({
   orderId,
@@ -33,7 +34,7 @@ export default function OrderDetailsCard({
         <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
           Tax: {tax}€
         </p>
-        <div className="mb-1 text-lg tracking-tight text-gray-900 dark:text-white shadow-md rounded-lg border border-gray-200">
+        <div className="mt-8 mb-1 text-lg tracking-tight text-gray-900 dark:text-white shadow-md rounded-lg border border-gray-200">
           <p className="p-4">
             <span className="text-xl font-bold">Shipping address: </span>
             {shippingAddress.countryCode} {shippingAddress.city}{" "}
@@ -49,7 +50,24 @@ export default function OrderDetailsCard({
             {billingAddress.postalCode}
           </p>
         </div>
-        {/* Order items */}
+        <p className="mt-8 text-xl font-semibold">N° of items {orderItems?.length}</p>
+        <div className="flex flex-wrap">
+        {orderItems?.length > 0 ? (
+          orderItems.map((order) => (
+            <ItemCard
+              name={order.name}
+              price={order.price}
+              quantity={order.quantity}
+              key={order.id}
+              image={order.image}
+            />
+          ))
+        ) : (
+          <p>
+            There is no items in order n° {orderId}
+          </p>
+        )}
+      </div>
         <Button
           handleClick={handleBack}
           classNameValue="w-full text-white flex justify-center hover:cursor-pointer bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-800 dark:hover:bg-red-700 dark:focus:ring-red-700 dark:border-red-700 mt-4"

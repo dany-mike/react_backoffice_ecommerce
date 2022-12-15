@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { fetchUserById } from "../../api/UsersAPI";
 import { useLoading } from "../../context/loading";
 import { getObjectLength } from "../../utils";
-import CartItemCard from "../components/CartItemCard/CartItemCard";
+import ItemCard from "../components/ItemCard/ItemCard";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import OrderDetailsCard from "../components/OrderDetailsCard/OrderDetailsCard";
-import OrderItemCard from "../components/OrderCard/OrderCard";
+import OrderCard from "../components/OrderCard/OrderCard";
 import WishlistItemCard from "../components/WishlistItemCard/WishlistItemCard";
 
 export default function UserInfo() {
@@ -42,7 +42,7 @@ export default function UserInfo() {
       );
     } else {
       return userInfo.order?.map((order) => (
-        <OrderItemCard
+        <OrderCard
           orderId={order.id}
           status={order.status}
           totalPrice={order.totalPrice}
@@ -81,7 +81,7 @@ export default function UserInfo() {
       <div className="flex flex-wrap">
         {userInfo?.cart?.length > 0 ? (
           userInfo.cart?.map((cart) => (
-            <CartItemCard
+            <ItemCard
               name={cart.product.name}
               price={cart.product.price}
               quantity={cart.quantity}
