@@ -24,3 +24,26 @@ export function authHeader() {
 export function getObjectLength(myObj) {
   return Object.keys(myObj).length;
 }
+
+export function formatDate(date) {
+  return `${months[new Date(date).getMonth()]} ${new Date(
+    date
+  ).getDay()}, ${new Date(date).getFullYear()} at ${new Date(
+    date
+  ).getHours()}:${new Date().getMinutes()}`;
+}
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

@@ -34,7 +34,7 @@ function Sidebar({ isAuthenticated, user }) {
     {
       label: "Users",
       path: "/users",
-    }
+    },
   ];
 
   return (

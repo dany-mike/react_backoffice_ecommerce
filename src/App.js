@@ -58,9 +58,9 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar user={user} isAuthenticated={isAuthenticated} />
-      <div className="flex h-screen">
+      <div className="flex">
         <Sidebar user={user} isAuthenticated={isAuthenticated} />
-        <div className="content overflow-x-hidden overflow-scroll w-full p-4 lg:p-12">
+        <div className="content w-full p-4 lg:p-12">
           <Routes>
             <Route
               path="/"

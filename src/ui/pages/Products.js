@@ -47,6 +47,7 @@ export default function Products() {
               id={product.id}
               key={product.id}
               image={product.image}
+              createdDate={product.createdDate}
               handleDelete={handleDelete}
             />
           ))}
