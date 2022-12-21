@@ -31,7 +31,6 @@ export function formatDate(date) {
   const year = new Date(date).getFullYear();
   const hours = new Date(date).getHours() + 1;
   const minutes = new Date(date).getMinutes();
-
   return `${months[month]} ${day}, ${year} at ${hours}:${
     minutes.toString().length > 1 ? minutes : "0" + minutes
   } `;
