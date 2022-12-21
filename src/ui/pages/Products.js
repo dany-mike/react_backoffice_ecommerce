@@ -24,7 +24,6 @@ export default function Products() {
   async function handleDelete(e, id) {
     setLoading(true);
     e.preventDefault();
-    console.log(id);
     await deleteProduct(id);
     const products = await fetchProducts();
     setProducts(products);

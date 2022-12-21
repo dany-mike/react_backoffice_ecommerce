@@ -26,11 +26,15 @@ export function getObjectLength(myObj) {
 }
 
 export function formatDate(date) {
-  return `${months[new Date(date).getMonth()]} ${new Date(
-    date
-  ).getDay()}, ${new Date(date).getFullYear()} at ${
-    new Date(date).getHours() + 1
-  }:${new Date(date).getMinutes()}`;
+  const month = new Date(date).getMonth();
+  const day = new Date(date).getDay();
+  const year = new Date(date).getFullYear();
+  const hours = new Date(date).getHours() + 1;
+  const minutes = new Date(date).getMinutes();
+
+  return `${months[month]} ${day}, ${year} at ${hours}:${
+    minutes.toString().length > 1 ? minutes : "0" + minutes
+  } `;
 }
 
 const months = [

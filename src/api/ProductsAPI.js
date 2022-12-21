@@ -1,6 +1,5 @@
-import API, { TOKEN_KEY, USER_KEY } from "./APIUtils";
 import { authHeader } from "../utils";
-import { setToken } from "./APIUtils";
+import API from "./APIUtils";
 
 export function fetchProducts() {
   return API.get("/products")

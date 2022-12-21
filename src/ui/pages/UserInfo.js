@@ -8,6 +8,7 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import OrderDetailsCard from "../components/OrderDetailsCard/OrderDetailsCard";
 import OrderCard from "../components/OrderCard/OrderCard";
 import WishlistItemCard from "../components/WishlistItemCard/WishlistItemCard";
+import { CANCELLED, cancelOrder } from "../../api/OrderAPI";
 
 export default function UserInfo() {
   const params = useParams();
@@ -24,6 +25,25 @@ export default function UserInfo() {
     })();
   }, [params?.userId, setLoading]);
 
+  const onCancelOrder = async (e, orderId, userId, orderDetails) => {
+    const cancel = window.confirm(`Are you sure to cancel order n°${orderId}`);
+    if (cancel) {
+      setLoading(true);
+      e.preventDefault();
+      await cancelOrder(orderId, userId);
+      const userInfo = await fetchUserById(userId);
+      if (orderDetails) {
+        setOrderDetails({
+          ...orderDetails,
+          status: CANCELLED,
+        });
+      }
+
+      setUserInfo(userInfo);
+      setLoading(false);
+    }
+  };
+
   function OrderContent() {
     if (getObjectLength(orderDetails) > 0) {
       return (
@@ -39,6 +59,9 @@ export default function UserInfo() {
           key={orderDetails.orderId}
           createdDate={orderDetails.createdDate}
           setOrderDetails={setOrderDetails}
+          onCancelOrder={onCancelOrder}
+          loading={loading}
+          userId={userInfo?.user?.id}
         />
       );
     } else {
@@ -55,6 +78,9 @@ export default function UserInfo() {
           shippingAddress={order.shippingAddress}
           createdDate={order.createdDate}
           setOrderDetails={setOrderDetails}
+          onCancelOrder={onCancelOrder}
+          loading={loading}
+          userId={userInfo?.user?.id}
         />
       ));
     }
