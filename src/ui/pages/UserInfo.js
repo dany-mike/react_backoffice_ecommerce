@@ -57,6 +57,7 @@ export default function UserInfo() {
           totalPrice={orderDetails.totalPrice}
           key={orderDetails.orderId}
           createdDate={orderDetails.createdDate}
+          updatedDate={orderDetails.updatedDate}
           setOrderDetails={setOrderDetails}
           onCancelOrder={onCancelOrder}
           loading={loading}
@@ -76,6 +77,7 @@ export default function UserInfo() {
           billingAddress={order.billingAddress}
           shippingAddress={order.shippingAddress}
           createdDate={order.createdDate}
+          updatedDate={order.updatedDate}
           setOrderDetails={setOrderDetails}
           onCancelOrder={onCancelOrder}
           loading={loading}
