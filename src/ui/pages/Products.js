@@ -22,12 +22,17 @@ export default function Products() {
   }, [setLoading]);
 
   async function handleDelete(e, id) {
-    setLoading(true);
     e.preventDefault();
-    await deleteProduct(id);
-    const products = await fetchProducts();
-    setProducts(products);
-    setLoading(false);
+    const handleDelete = window.confirm(
+      "Are you sure to delete this product ?"
+    );
+    if (handleDelete) {
+      setLoading(true);
+      await deleteProduct(id);
+      const products = await fetchProducts();
+      setProducts(products);
+      setLoading(false);
+    }
   }
 
   return loading ? (
