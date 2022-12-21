@@ -64,9 +64,3 @@ export async function updateProduct(
     .then((res) => res.data)
     .catch((err) => console.log(err));
 }
-
-export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(USER_KEY);
-  setToken(null);
-}

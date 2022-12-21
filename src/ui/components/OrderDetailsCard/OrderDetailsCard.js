@@ -1,3 +1,4 @@
+import { COMPLETE, CREATED } from "../../../api/OrderAPI";
 import { formatDate } from "../../../utils";
 import Button from "../Button/Button";
 import ItemCard from "../ItemCard/ItemCard";
@@ -83,6 +84,19 @@ export default function OrderDetailsCard({
             <p>There is no items in order n° {orderId}</p>
           )}
         </div>
+        {status === CREATED || status === COMPLETE ? (
+          <>
+            {" "}
+            <Button
+              handleClick={() => console.log("click")}
+              classNameValue="w-full text-white flex justify-center hover:cursor-pointer bg-indigo-800 hover:bg-indio-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm mb-2 dark:bg-indigo-800 dark:hover:bg-indigo-700 dark:focus:ring-indigo-700 dark:border-indigo-700 mt-4"
+            >
+              Cancel order
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
         <Button
           handleClick={handleBack}
           classNameValue="w-full text-white flex justify-center hover:cursor-pointer bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-800 dark:hover:bg-red-700 dark:focus:ring-red-700 dark:border-red-700 mt-4"
