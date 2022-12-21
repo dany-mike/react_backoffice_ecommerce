@@ -139,7 +139,9 @@ export default function Register({ user }) {
       ) : (
         <>
           <ErrorMessageRendered>
-            <span className="font-bold text-xl">Role: {user?.role}</span>
+            <span className="font-bold text-xl">
+              Role: {user?.roles.at(-1)}
+            </span>
           </ErrorMessageRendered>
           <ErrorMessageRendered>
             <span className="font-bold text-xl">

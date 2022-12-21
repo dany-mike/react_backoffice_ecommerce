@@ -37,6 +37,7 @@ export default function UserInfo() {
           tax={orderDetails.tax}
           totalPrice={orderDetails.totalPrice}
           key={orderDetails.orderId}
+          createdDate={orderDetails.createdDate}
           setOrderDetails={setOrderDetails}
         />
       );
@@ -52,6 +53,7 @@ export default function UserInfo() {
           key={order.id}
           billingAddress={order.billingAddress}
           shippingAddress={order.shippingAddress}
+          createdDate={order.createdDate}
           setOrderDetails={setOrderDetails}
         />
       ));

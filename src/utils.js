@@ -28,9 +28,9 @@ export function getObjectLength(myObj) {
 export function formatDate(date) {
   return `${months[new Date(date).getMonth()]} ${new Date(
     date
-  ).getDay()}, ${new Date(date).getFullYear()} at ${new Date(
-    date
-  ).getHours()}:${new Date().getMinutes()}`;
+  ).getDay()}, ${new Date(date).getFullYear()} at ${
+    new Date(date).getHours() + 1
+  }:${new Date(date).getMinutes()}`;
 }
 
 const months = [

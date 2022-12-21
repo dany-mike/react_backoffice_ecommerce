@@ -1,3 +1,4 @@
+import { formatDate } from "../../../utils";
 import Button from "../Button/Button";
 import ItemCard from "../ItemCard/ItemCard";
 
@@ -11,6 +12,7 @@ export default function OrderDetailsCard({
   shippingAddress,
   billingAddress,
   setOrderDetails,
+  createdDate,
 }) {
   const handleBack = (e) => {
     e.preventDefault();
@@ -48,6 +50,9 @@ export default function OrderDetailsCard({
           Order number: {orderId}
         </p>
         <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+          Order date: {formatDate(createdDate)}
+        </p>
+        <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
           Status: {status}
         </p>
         <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -59,7 +64,7 @@ export default function OrderDetailsCard({
         <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
           Tax: {tax}€
         </p>
-        <Addresses/>
+        <Addresses />
         <p className="mt-8 text-xl font-semibold">
           N° of items {orderItems?.length}
         </p>

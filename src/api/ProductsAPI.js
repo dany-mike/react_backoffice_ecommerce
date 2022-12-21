@@ -27,7 +27,9 @@ export function createProduct(name, price, quantity, description, imageFiles) {
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
   const file = imageFiles[0];
-  bodyFormData.append("file", file, file.name);
+  if (file) {
+    bodyFormData.append("file", file, file?.name);
+  }
 
   return API.post("/products", bodyFormData, {
     headers: authHeader(),
@@ -51,7 +53,9 @@ export async function updateProduct(
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
   const file = imageFiles[0];
-  bodyFormData.append("file", file, file.name);
+  if (file) {
+    bodyFormData.append("file", file, file?.name);
+  }
 
   return API.put(`/products/${id}`, bodyFormData, {
     headers: authHeader(),

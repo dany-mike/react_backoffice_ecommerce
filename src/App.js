@@ -58,7 +58,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar user={user} isAuthenticated={isAuthenticated} />
-      <div className="flex">
+      <div className="flex min-h-screen">
         <Sidebar user={user} isAuthenticated={isAuthenticated} />
         <div className="content w-full p-4 lg:p-12">
           <Routes>
