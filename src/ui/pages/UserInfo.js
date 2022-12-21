@@ -38,7 +38,6 @@ export default function UserInfo() {
           status: CANCELLED,
         });
       }
-
       setUserInfo(userInfo);
       setLoading(false);
     }
