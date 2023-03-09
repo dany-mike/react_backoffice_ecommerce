@@ -32,13 +32,10 @@ export function createProduct(
   bodyFormData.append("price", price);
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
+  bodyFormData.append("categoryIds", categoryIds ? categoryIds : []);
   const file = imageFiles[0];
   if (file) {
     bodyFormData.append("file", file, file?.name);
-  }
-
-  if (categoryIds?.length > 0) {
-    console.log("category ids");
   }
 
   return API.post("/products", bodyFormData, {
@@ -63,13 +60,16 @@ export async function updateProduct(
   bodyFormData.append("price", price);
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
+
+  if (categoryIds?.length > 0) {
+    for (const id of categoryIds) {
+      bodyFormData.append("categoryIds", id);
+    }
+  }
+
   const file = imageFiles[0];
   if (file) {
     bodyFormData.append("file", file, file?.name);
-  }
-
-  if (categoryIds?.length > 0) {
-    console.log("category ids");
   }
 
   return API.put(`/products/${id}`, bodyFormData, {

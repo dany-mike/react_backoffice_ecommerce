@@ -52,6 +52,7 @@ export default function ProductForm({
 
   const onSubmit = async (data) => {
     setLoading(true);
+    const categoryIds = selected.map((c) => c.value);
     const user = isEdit
       ? await updateProduct(
           productInfo?.id,
@@ -59,14 +60,16 @@ export default function ProductForm({
           Number(data?.price),
           Number(data?.quantity),
           data?.description,
-          data?.file
+          data?.file,
+          categoryIds
         )
       : await createProduct(
           data.name,
           Number(data?.price),
           Number(data?.quantity),
           data?.description,
-          data?.file
+          data?.file,
+          categoryIds
         );
 
     if (user?.data?.message) {
