@@ -19,7 +19,14 @@ export function deleteProduct(id) {
     .catch((err) => err);
 }
 
-export function createProduct(name, price, quantity, description, imageFiles) {
+export function createProduct(
+  name,
+  price,
+  quantity,
+  description,
+  imageFiles,
+  categoryIds
+) {
   const bodyFormData = new FormData();
   bodyFormData.append("name", name);
   bodyFormData.append("price", price);
@@ -28,6 +35,10 @@ export function createProduct(name, price, quantity, description, imageFiles) {
   const file = imageFiles[0];
   if (file) {
     bodyFormData.append("file", file, file?.name);
+  }
+
+  if (categoryIds?.length > 0) {
+    console.log("category ids");
   }
 
   return API.post("/products", bodyFormData, {
@@ -44,7 +55,8 @@ export async function updateProduct(
   price,
   quantity,
   description,
-  imageFiles
+  imageFiles,
+  categoryIds
 ) {
   const bodyFormData = new FormData();
   bodyFormData.append("name", name);
@@ -54,6 +66,10 @@ export async function updateProduct(
   const file = imageFiles[0];
   if (file) {
     bodyFormData.append("file", file, file?.name);
+  }
+
+  if (categoryIds?.length > 0) {
+    console.log("category ids");
   }
 
   return API.put(`/products/${id}`, bodyFormData, {

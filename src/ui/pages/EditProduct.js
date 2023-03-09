@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { fetchCategories } from "../../api/CategoryAPI";
 import { fetchProduct } from "../../api/ProductsAPI";
 import useAuth from "../../context/auth";
+import { formatCategories } from "../../utils";
 import ProductForm from "../components/ProductForm/ProductForm";
 
 export default function EditProduct() {
   const [product, setProduct] = useState([]);
+  const [productCategories, setProductCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const params = useParams();
 
   const {
@@ -14,7 +18,10 @@ export default function EditProduct() {
 
   useEffect(() => {
     (async () => {
-      setProduct(await fetchProduct(params?.id));
+      const product = await fetchProduct(params?.id);
+      setCategories(formatCategories(await fetchCategories()));
+      setProduct(product);
+      setProductCategories(formatCategories(product?.category));
     })();
   }, [params?.id, user]);
 
@@ -22,7 +29,12 @@ export default function EditProduct() {
     <div className="edit-product">
       <p className="text-xl font-semibold">Edit {product?.name}</p>
       {product ? (
-        <ProductForm productInfo={product} isEdit={true} />
+        <ProductForm
+          productInfo={product}
+          isEdit={true}
+          productCategories={productCategories}
+          categories={categories}
+        />
       ) : (
         <div>Loading...</div>
       )}

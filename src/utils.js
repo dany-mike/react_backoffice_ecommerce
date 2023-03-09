@@ -50,3 +50,12 @@ const months = [
   "November",
   "December",
 ];
+
+export const formatCategories = (categories) => {
+  return categories?.map((c) => {
+    return {
+      label: c.name,
+      value: c.id,
+    };
+  });
+};
