@@ -32,6 +32,10 @@ function Sidebar({ isAuthenticated, user }) {
       path: "/products",
     },
     {
+      label: "Categories",
+      path: "/categories",
+    },
+    {
       label: "Users",
       path: "/users",
     },

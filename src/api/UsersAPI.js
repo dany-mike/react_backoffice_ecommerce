@@ -2,7 +2,6 @@ import { authHeader } from "../utils";
 import API from "./APIUtils";
 
 export function fetchCurrentUser() {
-  // Warning
   return API.get(`/users/token/me`)
     .then((res) => res)
     .catch((err) => err);

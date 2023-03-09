@@ -18,6 +18,7 @@ export default function OrderDetailsCard({
   onCancelOrder,
   loading,
   userId,
+  updatedDate,
 }) {
   const handleBack = (e) => {
     e.preventDefault();
@@ -60,6 +61,9 @@ export default function OrderDetailsCard({
           <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             Order date: {formatDate(createdDate)}
           </p>
+          {/* <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+            Last update date: {formatDate(updatedDate)}
+          </p> */}
           <p className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             Status: {status}
           </p>
