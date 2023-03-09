@@ -102,7 +102,7 @@ export default function ProductForm({
           )}
         />
         <MultiSelectComponent
-          categories={categories}
+          options={categories}
           label={"Categories"}
           selected={selected}
           setSelected={setSelected}

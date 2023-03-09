@@ -51,7 +51,7 @@ const months = [
   "December",
 ];
 
-export const formatCategories = (categories) => {
+export const formatToMultiselectArray = (categories) => {
   return categories?.map((c) => {
     return {
       label: c.name,

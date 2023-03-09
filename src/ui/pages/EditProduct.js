@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchCategories } from "../../api/CategoryAPI";
 import { fetchProduct } from "../../api/ProductsAPI";
 import useAuth from "../../context/auth";
-import { formatCategories } from "../../utils";
+import { formatToMultiselectArray } from "../../utils";
 import ProductForm from "../components/ProductForm/ProductForm";
 
 export default function EditProduct() {
@@ -19,9 +19,9 @@ export default function EditProduct() {
   useEffect(() => {
     (async () => {
       const product = await fetchProduct(params?.id);
-      setCategories(formatCategories(await fetchCategories()));
+      setCategories(formatToMultiselectArray(await fetchCategories()));
       setProduct(product);
-      setProductCategories(formatCategories(product?.category));
+      setProductCategories(formatToMultiselectArray(product?.category));
     })();
   }, [params?.id, user]);
 

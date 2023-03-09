@@ -1,7 +1,7 @@
 import { MultiSelect } from "react-multi-select-component";
 
 export default function MultiSelectComponent({
-  categories,
+  options,
   selected,
   setSelected,
   label,
@@ -12,7 +12,7 @@ export default function MultiSelectComponent({
         {label}
       </p>
       <MultiSelect
-        options={categories ? categories : []}
+        options={options ? options : []}
         value={selected}
         onChange={setSelected}
         labelledBy="Select"

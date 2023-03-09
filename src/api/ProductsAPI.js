@@ -32,7 +32,13 @@ export function createProduct(
   bodyFormData.append("price", price);
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
-  bodyFormData.append("categoryIds", categoryIds ? categoryIds : []);
+
+  if (categoryIds?.length > 0) {
+    for (const id of categoryIds) {
+      bodyFormData.append("categoryIds", id);
+    }
+  }
+
   const file = imageFiles[0];
   if (file) {
     bodyFormData.append("file", file, file?.name);
@@ -77,5 +83,5 @@ export async function updateProduct(
     "Content-Type": "multipart/form-data",
   })
     .then((res) => res.data)
-    .catch((err) => console.log(err));
+    .catch((err) => err);
 }

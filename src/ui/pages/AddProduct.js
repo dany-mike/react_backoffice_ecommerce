@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { fetchCategories } from "../../api/CategoryAPI";
-import { formatCategories } from "../../utils";
+import { formatToMultiselectArray } from "../../utils";
 import ProductForm from "../components/ProductForm/ProductForm";
 
 export default function AddProduct() {
@@ -9,7 +9,7 @@ export default function AddProduct() {
 
   useEffect(() => {
     (async () => {
-      setCategories(formatCategories(await fetchCategories()));
+      setCategories(formatToMultiselectArray(await fetchCategories()));
     })();
   }, []);
 
