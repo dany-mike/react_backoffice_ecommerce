@@ -51,7 +51,10 @@ export async function updateProduct(
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
   const file = imageFiles[0];
-  bodyFormData.append("file", file, file.name);
+
+  if(file?.name) {
+    bodyFormData.append("file", file, file.name);
+  }
 
   return API.put(`/products/${id}`, bodyFormData, {
     headers: authHeader(),
