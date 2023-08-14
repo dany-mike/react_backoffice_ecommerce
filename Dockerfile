@@ -1,12 +1,11 @@
 FROM node:16 AS development
-RUN mkdir /app && chown node:node /app
 ENV NODE_ENV development
 WORKDIR /app
-USER node
-COPY --chown=node:node package.json .
-COPY --chown=node:node yarn.lock .
+COPY package.json .
+COPY yarn.lock .
 RUN yarn install
-COPY --chown=node:node . .
+RUN yarn build
+COPY . .
 EXPOSE 7003
 CMD [ "yarn", "start" ]
 
