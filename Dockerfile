@@ -4,8 +4,8 @@ WORKDIR /app
 COPY package.json .
 COPY yarn.lock .
 RUN yarn install
-RUN yarn build
 COPY . .
+RUN yarn build
 EXPOSE 7003
 CMD [ "yarn", "start" ]
 
