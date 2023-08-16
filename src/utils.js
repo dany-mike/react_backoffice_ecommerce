@@ -20,3 +20,42 @@ export function authHeader() {
     return {};
   }
 }
+
+export function getObjectLength(myObj) {
+  return Object.keys(myObj).length;
+}
+
+export function formatDate(date) {
+  const month = new Date(date).getMonth();
+  const day = new Date(date).getDay();
+  const year = new Date(date).getFullYear();
+  const hours = new Date(date).getHours() + 1;
+  const minutes = new Date(date).getMinutes();
+  return `${months[month]} ${day}, ${year} at ${hours}:${
+    minutes.toString().length > 1 ? minutes : "0" + minutes
+  } `;
+}
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+export const formatToMultiselectArray = (categories) => {
+  return categories?.map((c) => {
+    return {
+      label: c.name,
+      value: c.id,
+    };
+  });
+};

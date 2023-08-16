@@ -10,10 +10,16 @@ import FileUploadInput from "../FileUploadInput/FileUploadInput";
 import InfoMessage from "../InfoMessage/InfoMessage";
 import Input from "../Input/Input";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import MultiSelectComponent from "../MultiSelectComponent/MultiSelectComponent";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import TextArea from "../TextArea/TextArea";
 
-export default function ProductForm({ productInfo, isEdit }) {
+export default function ProductForm({
+  productInfo,
+  isEdit,
+  productCategories,
+  categories,
+}) {
   const {
     register,
     handleSubmit,
@@ -31,17 +37,22 @@ export default function ProductForm({ productInfo, isEdit }) {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [imageName, setImageName] = useState("");
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
+    if (productCategories) {
+      setSelected(productCategories);
+    }
     reset(productInfo);
     const subscription = watch((value) => {
       setImageName(value.file[0]?.name);
     });
     return () => subscription.unsubscribe();
-  }, [productInfo, reset, watch]);
+  }, [productInfo, productCategories, reset, watch]);
 
   const onSubmit = async (data) => {
     setLoading(true);
+    const categoryIds = selected.map((c) => c.value);
     const user = isEdit
       ? await updateProduct(
           productInfo?.id,
@@ -49,14 +60,16 @@ export default function ProductForm({ productInfo, isEdit }) {
           Number(data?.price),
           Number(data?.quantity),
           data?.description,
-          data?.file
+          data?.file,
+          categoryIds
         )
       : await createProduct(
           data.name,
           Number(data?.price),
           Number(data?.quantity),
           data?.description,
-          data?.file
+          data?.file,
+          categoryIds
         );
 
     if (user?.data?.message) {
@@ -87,6 +100,12 @@ export default function ProductForm({ productInfo, isEdit }) {
               {errors?.product?.message}
             </ErrorMessageRendered>
           )}
+        />
+        <MultiSelectComponent
+          options={categories}
+          label={"Categories"}
+          selected={selected}
+          setSelected={setSelected}
         />
         <Input
           inputLabel="Product price"

@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteProduct, fetchProducts } from "../../api/ProductsAPI";
+import { deleteCategory, fetchCategories } from "../../api/CategoryAPI";
 import { useLoading } from "../../context/loading";
 import Button from "../components/Button/Button";
+import CategoryListItem from "../components/CategoryListItem/CategoryListItem";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import ProductCard from "../components/ProductCard/ProductCard";
 
-export default function Products() {
-  const [products, setProducts] = useState([]);
+export default function Categories() {
+  const [categories, setCategories] = useState([]);
 
   const { loading, setLoading } = useLoading();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await fetchProducts();
-      setProducts(data);
+      const data = await fetchCategories();
+      setCategories(data);
       setLoading(false);
     };
     fetchData().catch(console.error);
@@ -24,13 +24,13 @@ export default function Products() {
   async function handleDelete(e, id) {
     e.preventDefault();
     const handleDelete = window.confirm(
-      "Are you sure to delete this product ?"
+      "Are you sure to delete this category ?"
     );
     if (handleDelete) {
       setLoading(true);
-      await deleteProduct(id);
-      const products = await fetchProducts();
-      setProducts(products);
+      await deleteCategory(id);
+      const products = await fetchCategories();
+      setCategories(products);
       setLoading(false);
     }
   }
@@ -39,26 +39,21 @@ export default function Products() {
     <LoadingSpinner />
   ) : (
     <div>
-      <h1 className="text-xl">My products</h1>
-      <div className="flex flex-wrap">
-        {products.length > 0 &&
-          products?.map((product) => (
-            <ProductCard
-              description={product.description}
-              name={product.name}
-              price={product.price}
-              quantity={product.quantity}
-              id={product.id}
-              key={product.id}
-              image={product.image}
-              createdDate={product.createdDate}
+      <h1 className="text-xl">My categories</h1>
+      <div>
+        {categories.length > 0 &&
+          categories?.map((category) => (
+            <CategoryListItem
+              name={category.name}
+              key={category.id}
               handleDelete={handleDelete}
+              id={category.id}
             />
           ))}
       </div>
-      <Link to={`/products/add`}>
+      <Link to={`/categories/add`}>
         <Button classNameValue="mt-4 inline-flex items-center text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2 hover:cursor-pointer">
-          Add product
+          Add category
         </Button>
       </Link>
     </div>

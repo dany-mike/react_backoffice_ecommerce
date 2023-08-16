@@ -6,7 +6,10 @@ import { LoadingProvider } from "./context/loading";
 import LayoutPage from "./ui/components/LayoutPage/LayoutPage";
 import Navbar from "./ui/components/Navbar/NavBar";
 import Sidebar from "./ui/components/Sidebar/Sidebar";
+import AddCategory from "./ui/pages/AddCategory";
 import AddProduct from "./ui/pages/AddProduct";
+import Categories from "./ui/pages/Categories";
+import EditCategory from "./ui/pages/EditCategory";
 import EditProduct from "./ui/pages/EditProduct";
 import Home from "./ui/pages/Home";
 import Login from "./ui/pages/Login";
@@ -58,9 +61,9 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar user={user} isAuthenticated={isAuthenticated} />
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
         <Sidebar user={user} isAuthenticated={isAuthenticated} />
-        <div className="content overflow-x-hidden overflow-scroll w-full p-4 lg:p-12">
+        <div className="content w-full p-4 lg:p-12">
           <Routes>
             <Route
               path="/"
@@ -78,6 +81,36 @@ function App() {
                 <ProtectedRoute>
                   <LayoutPage title="Products">
                     <Products />
+                  </LayoutPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories"
+              element={
+                <ProtectedRoute>
+                  <LayoutPage title="Categories">
+                    <Categories />
+                  </LayoutPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories/add"
+              element={
+                <ProtectedRoute>
+                  <LayoutPage title="Add category">
+                    <AddCategory />
+                  </LayoutPage>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/categories/edit/:name"
+              element={
+                <ProtectedRoute>
+                  <LayoutPage title="Edit category">
+                    <EditCategory />
                   </LayoutPage>
                 </ProtectedRoute>
               }
@@ -105,11 +138,11 @@ function App() {
             <Route
               path="/register"
               element={
-                // <ProtectedRoute>
-                <LayoutPage title="Register">
-                  <Register user={user} />
-                </LayoutPage>
-                // </ProtectedRoute>
+                <ProtectedRoute>
+                  <LayoutPage title="Register">
+                    <Register user={user} />
+                  </LayoutPage>
+                </ProtectedRoute>
               }
             />
             <Route

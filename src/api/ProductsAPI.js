@@ -1,6 +1,5 @@
-import API, { TOKEN_KEY, USER_KEY } from "./APIUtils";
 import { authHeader } from "../utils";
-import { setToken } from "./APIUtils";
+import API from "./APIUtils";
 
 export function fetchProducts() {
   return API.get("/products")
@@ -20,14 +19,30 @@ export function deleteProduct(id) {
     .catch((err) => err);
 }
 
-export function createProduct(name, price, quantity, description, imageFiles) {
+export function createProduct(
+  name,
+  price,
+  quantity,
+  description,
+  imageFiles,
+  categoryIds
+) {
   const bodyFormData = new FormData();
   bodyFormData.append("name", name);
   bodyFormData.append("price", price);
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
+
+  if (categoryIds?.length > 0) {
+    for (const id of categoryIds) {
+      bodyFormData.append("categoryIds", id);
+    }
+  }
+
   const file = imageFiles[0];
-  bodyFormData.append("file", file, file.name);
+  if (file) {
+    bodyFormData.append("file", file, file?.name);
+  }
 
   return API.post("/products", bodyFormData, {
     headers: authHeader(),
@@ -43,14 +58,23 @@ export async function updateProduct(
   price,
   quantity,
   description,
-  imageFiles
+  imageFiles,
+  categoryIds
 ) {
   const bodyFormData = new FormData();
   bodyFormData.append("name", name);
   bodyFormData.append("price", price);
   bodyFormData.append("quantity", quantity);
   bodyFormData.append("description", description);
+
+  if (categoryIds?.length > 0) {
+    for (const id of categoryIds) {
+      bodyFormData.append("categoryIds", id);
+    }
+  }
+
   const file = imageFiles[0];
+
 
   if(file?.name) {
     bodyFormData.append("file", file, file.name);
@@ -61,11 +85,5 @@ export async function updateProduct(
     "Content-Type": "multipart/form-data",
   })
     .then((res) => res.data)
-    .catch((err) => console.log(err));
-}
-
-export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(USER_KEY);
-  setToken(null);
+    .catch((err) => err);
 }

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { formatDate } from "../../../utils";
 import Button from "../Button/Button";
 
 export default function ProductCard({
@@ -9,6 +10,7 @@ export default function ProductCard({
   quantity,
   handleDelete,
   image,
+  createdDate,
 }) {
   return (
     <div className="max-w-lg bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 w-full mt-4 mr-4">
@@ -29,6 +31,9 @@ export default function ProductCard({
           </h5>
           <h5 className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
             Quantity: *{quantity}
+          </h5>
+          <h5 className="mb-1 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+            Created date: {formatDate(createdDate)}
           </h5>
         </Link>
         <p className="mb-1 font-normal text-gray-700 dark:text-gray-400">
