@@ -74,8 +74,10 @@ export async function updateProduct(
   }
 
   const file = imageFiles[0];
-  if (file) {
-    bodyFormData.append("file", file, file?.name);
+
+
+  if(file?.name) {
+    bodyFormData.append("file", file, file.name);
   }
 
   return API.put(`/products/${id}`, bodyFormData, {

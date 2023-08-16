@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  web:
+    container_name: dany-react-ecom-backoffice
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "7003:7003"
+    networks:
+      - dany-react-backoffice
+
+networks:
+  dany-react-backoffice:
+    driver: bridge
